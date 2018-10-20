@@ -6,51 +6,59 @@
 #include <stack>
 #include <string>
 
+#define key_type size_t
+
 template< typename T >
 class bst
 {
 	private:
 		struct Node{
-		/* Essa parte de value e key n sei se precisa diferenciar
-		 * ou usar só conteúdo msm ta ligado. RAMOS
-		 */
-			T value;
-			T key;		
-			Node* l;	// Left sub-tree.
-			Node* r;	// Right sub-tree.
+			key_type key;	// Key of the node
+			T value;        // Node content (maybe not necessary? TODO: ask silvia)
+			Node *l;	    // Left sub-tree.
+			Node *r;	    // Right sub-tree.
+            Node *f;        // Origin node (or father)
+            Node(key_type n_key) : key(n_key){};    // default constructor
+            ~Node(){ delete l; delete r; };         // default destructor
 		};
 
 		size_t m_size;	// Number of nodes.
-		Node* m_root;	// Tree root node.
+		Node * m_root;	// Tree root node.
+        Node * auxiliar_node;
+
+        // auxiliary functions
+        void add_son(Node *& father, Node *& son){
+            if( son->key > father ){
+                father->r = son;
+            } else {
+                father->l = son;
+            }
+        }
 	
 	public:
-		/* Constructors and Destructors{{{*/
 		//!< Void Constructor
-		bst(){}
+        bst();
 
 		//!< Copy Constructor
-		bst( bst<T> &rhs )
-		{
-		}
+		// bst( bst<T> &rhs );
 
 		//!< Destructor
-		~bst(){/*empty*/}
-		/*}}}*/
-		/* Standard methods{{{*/
+		// ~bst();
+        
 		//!< Searches for a specific value inside tree.
-		Node busca( T key, Node pt );
+		Node find( T key, Node pt );
 
-		void insert( Node*& root, T key, T value );
+        //!< Insert function
+		void insert( Node*& root, key_type key/* , T value */ );
 
+        //!< Remove function
 		void remove(/* TODO */);
-		/*}}}*/
-		/* Additional Methods{{{*/
 
-		//!< Returns nent element, going from 1 with in-order path of bst.
-		T enesimoElemento( int n );
+		//!< Returns nth element, going from 1 with in-order path of bst.
+		T nthElement( size_t n );
 
 		//!< Returns position occupied by value, with in-order path.
-		int pos( T value );
+		int position( T value );
 
 		/*! Returns element containing median of bst.
 		 * If bst has a even number of elements, return smallest median.
@@ -65,8 +73,8 @@ class bst
 
 		//!< Returns a string cointaning the bst travelling sequence by level.
 		std::string toString();
-		/*}}}*/
-
 };
 
+// source code
+#include "bst.inl"
 #endif

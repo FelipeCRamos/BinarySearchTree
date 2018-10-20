@@ -56,9 +56,10 @@ void bst<T>::insert( Node *& root, key_type key/* , T value */ )
         }
     }
 }
+/*
 
 template< typename T >
-void bst<T>::remove(/* TODO */)
+void bst<T>::remove()
 {
 }
 
@@ -75,9 +76,6 @@ int bst<T>::position( T value )
 
 }
 
-/*! Returns element containing median of bst.
- * If bst has a even number of elements, return smallest median.
-*/
 template< typename T >
 T bst<T>::median()
 {
@@ -100,3 +98,4 @@ template< typename T >
 std::string bst<T>::toString()
 {
 }
+*/
