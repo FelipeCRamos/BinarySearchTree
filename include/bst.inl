@@ -4,10 +4,33 @@
 
 #define log false   // Log for debug
 
+template <typename T>
+void bst<T>::add_son( Node *& father, Node *& son ){
+    if(log){
+        std::cout << "[add_son] -> father = " << father->key 
+        << " - " << father << std::endl;
+        std::cout << "[add_son] -> son = " << son->key 
+        << " - " << son << std::endl;
+    }
+    son->f = father;
+    if( son->key > father->key ){
+        father->r = son;
+        if(log){
+            std::cout << "[add_son] -> success: father->r = son\n";
+            std::cout << "[add_son] -> father->r = " << father->r << "\n";
+        }
+        } else {
+            father->l = son;
+            if(log){
+                std::cout << "[add_son] -> success: father->l = son\n";
+                std::cout << "[add_son] -> father->l = " << father->l << "\n";
+            }
+    }
+}
+
 //!< Void constructor
 template <typename T>
 bst<T>::bst(void){
-    // initialize with empty tree
     this->m_root = nullptr;
     this->m_size = 0;
 }
@@ -65,35 +88,41 @@ bool bst<T>::insert( Node *& root, key_type key/* , T value */ )
 template< typename T >
 void bst<T>::remove()
 {
+    // TODO
 }
 
 //!< Returns nent element, going from 1 with in-order path of bst.
 template< typename T >
 T bst<T>::nthElement( size_t n )
 {
+    // TODO
 }
 
 //!< Returns position occupied by value, with in-order path.
 template< typename T >
 int bst<T>::position( T value )
 {
+    // TODO
 }
 
 template< typename T >
 T bst<T>::median()
 {
+    // TODO
 }
 
 //!< Returns True if the bst is a full tree. False otherwise
 template< typename T >
 bool bst<T>::isFull()
 {
+    // TODO
 }
 
 //!< Returns True if the bst is a complete tree. False otherwise.
 template< typename T >
 bool bst<T>::isComplete()
 {
+    // TODO
 }
 
 //!< Returns a string cointaning the bst travelling sequence by level.
@@ -108,9 +137,9 @@ std::string bst<T>::toString()
     {
         Node *actual = to_print.front();
         to_print.pop();
-        // std::cout << actual->key << " ";
-        buf += std::to_string(actual->key);
-        buf += " ";
+
+        buf += std::to_string(actual->key) + " ";
+        // buf += " ";
 
         if(actual->l != nullptr){
             to_print.push(actual->l);

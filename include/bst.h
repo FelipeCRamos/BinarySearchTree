@@ -6,10 +6,10 @@
 #include <queue>
 #include <string>
 
-#define key_type size_t
+#define key_type long int
 #define log false
 
-template< typename T >
+template <typename T>
 class bst
 {
 	private:
@@ -27,28 +27,8 @@ class bst
 		Node * m_root;	        // Tree root node.
         Node * auxiliar_node;   // Auxiliar node, used in some functions
 
-        void add_son(Node *& father, Node *& son){
-            if(log){
-                std::cout << "[add_son] -> father = " << father->key 
-                    << " - " << father << std::endl;
-                std::cout << "[add_son] -> son = " << son->key 
-                    << " - " << son << std::endl;
-            }
-            son->f = father;
-            if( son->key > father->key ){
-                father->r = son;
-                if(log){
-                    std::cout << "[add_son] -> success: father->r = son\n";
-                    std::cout << "[add_son] -> father->r = " << father->r << "\n";
-                }
-            } else {
-                father->l = son;
-                if(log){
-                    std::cout << "[add_son] -> success: father->l = son\n";
-                    std::cout << "[add_son] -> father->l = " << father->l << "\n";
-                }
-            }
-        }
+        //!< A function to make the link between father & son nodes
+        void add_son( Node *& father, Node *& son );
 	
         //!< Insert function
 		bool insert( Node*& root, key_type key/* , T value */ );
