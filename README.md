@@ -10,13 +10,43 @@ As requested by our professor at the subject Basic Data Structure 2 ([EDB2](http
 + `isComplete()` - Returns a `boolean` value telling if the binary tree is a complete tree.
 + `toString()` - Returns a string containing the visitation sequence by level.
 
+## Instructions
+By default, this program will recieve two files:
++ Keys file
+A file that will generate the initial tree, all separated by spaces, i.e.:
+```
+12 30 50 10 11 5 30 90
+```
+
++ Commands file
+A file containing commands, one on each line, some of them needs args, you can put them by a single space, i.e.:
+```
+CHEIA
+ENESIMO 10
+INSIRA 22
+IMPRIMA
+```
+
+### Supported commands
+In this version, we will support the following commands:
++ `ENESIMO N` - Will return the nth element on the in-order representation of the binary search tree.
++ `POSICAO N` - Will return the position that the element is on a in-order representation of the binary search tree.
++ `MEDIANA`- Will return the median of an in-order representation of a binary search tree.
++ `CHEIA` - Will tell if the tree is a full tree (All empty nodes are on the `last` level).
++ `COMPLETA` - Will tell if the tree is a complete tree (All empty nodes are on the `last` or `last-1` levels).
++ `IMPRIMA` - Will return the binary search tree represented by level.
++ `REMOVA N` - Will remove key `N` from the binary search tree.
++ `INSIRA N` - Will insert key `N` into the binary search tree.
+
+
+
 ## TODO
 
 - [x] Node Struct
 - [ ] Bst methods
-- [ ] Main.cpp organization
+- [x] Main.cpp organization
 - [x] Makefile/CmakeLists
-- [ ] InputFile reading
+- [x] InputFile reading
 - [ ] Doxygen Documentation ***SuperLowPriority***
 
 ## Compilation
