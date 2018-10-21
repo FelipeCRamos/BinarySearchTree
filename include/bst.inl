@@ -2,7 +2,7 @@
 
 #include "bst.h"
 
-#define log true
+#define log false   // Log for debug
 
 //!< Void constructor
 template <typename T>
@@ -20,43 +20,47 @@ typename bst<T>::Node bst<T>::find( T key, Node pt )
 }
 
 template< typename T >
-void bst<T>::insert( Node *& root, key_type key/* , T value */ )
+bool bst<T>::insert( Node *& root, key_type key/* , T value */ )
 {
     if( this->m_size == 0 ){        // it's an empty tree
-        this->m_root = root;
+        this->m_root = new Node(key);
         this->m_size++;
+        return true;
     } else {
         if( root == nullptr ){
             root = new Node(key);   // links atual node for new-node
             this->m_size++;         // increment the quantity of nodes
-            add_son(auxiliar_node, root); // link him to the father node
+
+            add_son(auxiliar_node, root); // link father & son
+
             if(log)
             {
                 std::cout << "STATUS: ";
                 std::cout << "Node added! Info:" << std::endl;
                 std::cout << "\tFather: " << root->f << std::endl;
                 std::cout << "\tLeft son: " << root->l << std::endl;
-                std::cout << "\tRight son: " << root->l << std::endl;
+                std::cout << "\tRight son: " << root->r << std::endl;
             }
+            return true;
             
-            
-        } else if ( root->key > key ){
+        } else if ( root->key < key ){
             this->auxiliar_node = root;
             insert( root->r, key);  // key is bigger than
 
-        } else if ( root->key < key ){
+        } else if ( root->key > key ){
             this->auxiliar_node = root;
             insert( root->l, key);  // key is smaller than
 
-        } else if ( root->key == key ){
+        } else if ( root != nullptr && root->key == key ){
             std::cerr << "ERROR[00]: Key already exists, not inserting.\n";
-            return;                 // key already exists
+            return false;
         } else {
             std::cerr << "ERROR[01]: Not predicted this case, please report!\n";
+            return false;
         }
     }
+    return false;
 }
-/*
 
 template< typename T >
 void bst<T>::remove()
@@ -73,7 +77,6 @@ T bst<T>::nthElement( size_t n )
 template< typename T >
 int bst<T>::position( T value )
 {
-
 }
 
 template< typename T >
@@ -97,5 +100,25 @@ bool bst<T>::isComplete()
 template< typename T >
 std::string bst<T>::toString()
 {
+    std::string buf;
+    std::queue<Node *> to_print;
+
+    to_print.push(this->m_root);
+    while(!to_print.empty())
+    {
+        Node *actual = to_print.front();
+        to_print.pop();
+        // std::cout << actual->key << " ";
+        buf += std::to_string(actual->key);
+        buf += " ";
+
+        if(actual->l != nullptr){
+            to_print.push(actual->l);
+        }
+        if(actual->r != nullptr){
+            to_print.push(actual->r);
+        }
+    }    
+
+    return buf;
 }
-*/

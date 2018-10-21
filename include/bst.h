@@ -3,56 +3,74 @@
 
 #include <iostream>
 #include <fstream>
-#include <stack>
+#include <queue>
 #include <string>
 
 #define key_type size_t
+#define log false
 
 template< typename T >
 class bst
 {
 	private:
 		struct Node{
-			key_type key;	// Key of the node
-			T value;        // Node content (maybe not necessary? TODO: ask silvia)
-			Node *l;	    // Left sub-tree.
-			Node *r;	    // Right sub-tree.
-            Node *f;        // Origin node (or father)
+			key_type key;	        // Key of the node
+			T value;                // Node content (TODO: ask silvia)
+			Node *l = nullptr;	                    // Left sub-tree.
+			Node *r = nullptr;	                    // Right sub-tree.
+            Node *f = nullptr;                      // Origin node (or father)
             Node(key_type n_key) : key(n_key){};    // default constructor
             ~Node(){ delete l; delete r; };         // default destructor
 		};
 
-		size_t m_size;	// Number of nodes.
-		Node * m_root;	// Tree root node.
-        Node * auxiliar_node;
+		size_t m_size;	        // Number of nodes.
+		Node * m_root;	        // Tree root node.
+        Node * auxiliar_node;   // Auxiliar node, used in some functions
 
-        // auxiliary functions
         void add_son(Node *& father, Node *& son){
-            if( son->key > father ){
+            if(log){
+                std::cout << "[add_son] -> father = " << father->key 
+                    << " - " << father << std::endl;
+                std::cout << "[add_son] -> son = " << son->key 
+                    << " - " << son << std::endl;
+            }
+            son->f = father;
+            if( son->key > father->key ){
                 father->r = son;
+                if(log){
+                    std::cout << "[add_son] -> success: father->r = son\n";
+                    std::cout << "[add_son] -> father->r = " << father->r << "\n";
+                }
             } else {
                 father->l = son;
+                if(log){
+                    std::cout << "[add_son] -> success: father->l = son\n";
+                    std::cout << "[add_son] -> father->l = " << father->l << "\n";
+                }
             }
         }
 	
+        //!< Insert function
+		bool insert( Node*& root, key_type key/* , T value */ );
+
 	public:
 		//!< Void Constructor
         bst();
 
 		//!< Copy Constructor
-		// bst( bst<T> &rhs );
+        bst( bst<T> &rhs );
 
 		//!< Destructor
-		// ~bst();
+        ~bst(){ /* empty */ };
         
 		//!< Searches for a specific value inside tree.
 		Node find( T key, Node pt );
 
-        //!< Insert function
-		void insert( Node*& root, key_type key/* , T value */ );
+        //!< Add key to the binary tree
+        bool add( key_type key ){ return insert(this->m_root, key); };
 
         //!< Remove function
-		void remove(/* TODO */);
+		void remove();
 
 		//!< Returns nth element, going from 1 with in-order path of bst.
 		T nthElement( size_t n );
@@ -60,9 +78,7 @@ class bst
 		//!< Returns position occupied by value, with in-order path.
 		int position( T value );
 
-		/*! Returns element containing median of bst.
-		 * If bst has a even number of elements, return smallest median.
-		 */
+        //!< Returns the median of the Tree
 		T median();
 
 		//!< Returns True if the bst is a full tree. False otherwise
@@ -75,6 +91,7 @@ class bst
 		std::string toString();
 };
 
-// source code
+// Source code
 #include "bst.inl"
+
 #endif

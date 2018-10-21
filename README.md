@@ -12,7 +12,7 @@ As requested by our professor at the subject Basic Data Structure 2 ([EDB2](http
 
 ## TODO
 
-- [ ] Node Struct
+- [x] Node Struct
 - [ ] Bst methods
 - [ ] Main.cpp organization
 - [x] Makefile/CmakeLists
