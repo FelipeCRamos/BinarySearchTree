@@ -86,9 +86,41 @@ bool bst<T>::insert( Node *& root, key_type key/* , T value */ )
 }
 
 template< typename T >
-void bst<T>::remove()
+void bst<T>::remove(key_type key)
 {
-    // TODO
+    // find the node that has the key
+    Node * key_holder /*= find(key)*/;
+    // call for private recurssive function
+
+    if( key_holder->l == nullptr && key_holder->r == nullptr ){
+        // just remove-it
+        Node * father = key_holder->f;
+
+        // this if-else is to remove the link from father->son
+        if( father->r == key_holder ){
+            // it's the right son!
+            father->r = nullptr;    // remove link from father
+        } else if( father->l == key_holder ){
+            // it's the left son!
+            father->l = nullptr;    // remove link from father
+        } else {
+            std::cerr << "ERROR[05]: Not predicted this one! Please report!\n";
+            return;
+        }
+
+        // now, let's remove the son!
+        delete key_holder;
+    }
+    else if( key_holder->l == nullptr ^ key_holder->r == nullptr ){
+        // either r or l are null, not both
+        if( key_holder->l == nullptr ){
+            // right node will substitute his father
+        } else {
+            // left node will substitute his father 
+        }
+    } else {
+        // the node we want to remove has both sons, TODO
+    }
 }
 
 //!< Returns nent element, going from 1 with in-order path of bst.

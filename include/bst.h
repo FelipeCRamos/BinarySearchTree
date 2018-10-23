@@ -15,7 +15,7 @@ class bst
 	private:
 		struct Node{
 			key_type key;	        // Key of the node
-			T value;                // Node content (TODO: ask silvia)
+			/* T value; */               // Node content (TODO: ask silvia)
 			Node *l = nullptr;	                    // Left sub-tree.
 			Node *r = nullptr;	                    // Right sub-tree.
             Node *f = nullptr;                      // Origin node (or father)
@@ -32,6 +32,7 @@ class bst
 	
         //!< Insert function
 		bool insert( Node*& root, key_type key/* , T value */ );
+        bool p_remove( Node *& root );
 
 	public:
 		//!< Void Constructor
@@ -50,7 +51,7 @@ class bst
         bool add( key_type key ){ return insert(this->m_root, key); };
 
         //!< Remove function
-		void remove();
+		void remove( key_type key );
 
 		//!< Returns nth element, going from 1 with in-order path of bst.
 		T nthElement( size_t n );
