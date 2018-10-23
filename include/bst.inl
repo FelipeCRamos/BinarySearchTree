@@ -37,9 +37,28 @@ bst<T>::bst(void){
 
 //!< Searches for a specific value inside tree.
 template< typename T >
-typename bst<T>::Node bst<T>::find( T key, Node pt )
+typename bst<T>::Node bst<T>::busca( Node *&root, T key )
 {
-    // TODO
+	if( this->m_size == 0 or root == nullptr )
+	{
+		std::cerr << "ERROR[010]: Key not present in tree!Try another key.\n";
+		return bst<T>::Node(key);
+	}	
+	else if( root->key < key )
+	{
+		busca( root->r, key );		// key is bigger than
+	}
+	else if( root->key > key )	// key is smaller than
+	{
+		busca( root->l, key );
+	}
+	else if( root->key == key )	// key found
+	{
+		return key;//wtf?? return root; N roda?!?
+	}
+	else {
+		std::cerr << "ERROR[011]: Not predicted this case, please report!\n";
+	}
 }
 
 template< typename T >
@@ -82,6 +101,7 @@ bool bst<T>::insert( Node *& root, key_type key/* , T value */ )
             return false;
         }
     }
+
     return false;
 }
 

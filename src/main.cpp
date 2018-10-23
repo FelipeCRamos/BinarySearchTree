@@ -1,7 +1,3 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-
 #include "bst.h"
 #include "parser.h"
 
@@ -45,9 +41,9 @@ int main( int argc, char **argv )
     std::ifstream tree_file( tree_filename );
     std::ifstream comm_file( comm_filename );
 
-    std::vector<int> values = parse_from(tree_file);
+    std::vector< int > values = parse_from( tree_file );
     std::cout << "Values from " << tree_filename << " parsed.\n";
-    std::vector<std::pair<std::string, int> > commands = parse_commands(comm_file);
+    std::vector< std::pair< std::string, int > > commands = parse_commands( comm_file );
     std::cout << "Commands from " << comm_filename << " parsed.\n";
 
     tree_file.close();
@@ -96,12 +92,13 @@ int main( int argc, char **argv )
                 tree.add( i.second );
                 break;
             default:
-                std::cout << "Sorry, any matched!\n";
+                std::cout << "Sorry, command " << i.first
+						  << " isn't known!\n Try a valid command.\n";
         }
     }
 
-
-    
+	tree.find(5);
+	std::cout << "\n\033[1;32mOperations finished successfully!\033[0m\n";
 
 	return 0;
 }

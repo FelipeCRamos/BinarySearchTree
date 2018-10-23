@@ -1,7 +1,7 @@
 #include "parser.h"
 
-std::vector<int> parse_from( std::ifstream &ifs ){
-    std::vector<int> values_list;
+std::vector< int > parse_from( std::ifstream &ifs ){
+    std::vector< int > values_list;
     std::string acc;
     while( ifs.good() ){
         char c = (char)ifs.get();
@@ -9,7 +9,7 @@ std::vector<int> parse_from( std::ifstream &ifs ){
             acc += c;
         } else {
             // std::cout << "num: " << acc << std::endl;
-            values_list.push_back(stoi(acc));
+            values_list.push_back( stoi(acc) );
             acc = "";
         }
         // values_list.push_back(stoi(acc));
@@ -18,7 +18,7 @@ std::vector<int> parse_from( std::ifstream &ifs ){
 }
 
 std::vector<std::pair<std::string, int> > parse_commands( std::ifstream &ifs ){
-    std::vector<std::pair<std::string, int> > v; 
+    std::vector< std::pair< std::string, int > > v; 
     std::string buf;
     std::string word;
     std::string number;
@@ -26,7 +26,7 @@ std::vector<std::pair<std::string, int> > parse_commands( std::ifstream &ifs ){
     while( ifs.good() ){
         std::getline(ifs, buf);
 
-        // begin to proccess line
+        // Begin to proccess line
         bool word_complete = false;
         if( !buf.empty() ){
             // std::cout << "buffer: " << buf << " - " << buf.empty() <<std::endl;
@@ -48,7 +48,7 @@ std::vector<std::pair<std::string, int> > parse_commands( std::ifstream &ifs ){
                 n = 0; 
             }
 
-            v.push_back(std::make_pair(word, n));
+            v.push_back( std::make_pair(word, n) );
         }
 
         // reset the buffers

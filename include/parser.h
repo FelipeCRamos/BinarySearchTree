@@ -6,9 +6,10 @@
 #include <iostream>
 #include <fstream>
 
-//!< read the binary tree file
+//!< Reads file containing tree values.
 std::vector<int> parse_from( std::ifstream &ifs );
 
+//!< Reads file containing operations commands.
 std::vector<std::pair<std::string, int>> parse_commands( std::ifstream &ifs );
 
 #endif

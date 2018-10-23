@@ -16,9 +16,11 @@ class bst
 		struct Node{
 			key_type key;	        // Key of the node
 			T value;                // Node content (TODO: ask silvia)
+			
 			Node *l = nullptr;	                    // Left sub-tree.
 			Node *r = nullptr;	                    // Right sub-tree.
             Node *f = nullptr;                      // Origin node (or father)
+
             Node(key_type n_key) : key(n_key){};    // default constructor
             ~Node(){ delete l; delete r; };         // default destructor
 		};
@@ -33,6 +35,9 @@ class bst
         //!< Insert function
 		bool insert( Node*& root, key_type key/* , T value */ );
 
+		//!< Private function for find
+		Node busca( Node*& root, T key );
+
 	public:
 		//!< Void Constructor
         bst();
@@ -41,10 +46,10 @@ class bst
         bst( bst<T> &rhs );
 
 		//!< Destructor
-        ~bst(){ /* empty */ };
+        ~bst(){ /* empty */};
         
 		//!< Searches for a specific value inside tree.
-		Node find( T key, Node pt );
+		Node find( T key ){ return busca(this->m_root, key); };
 
         //!< Add key to the binary tree
         bool add( key_type key ){ return insert(this->m_root, key); };
