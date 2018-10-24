@@ -131,7 +131,20 @@ template< typename T >
 void bst<T>::remove(key_type key)   // TODO: Make arrangments if the node == m_root
 {
     // find the node that has the key
-    Node * key_holder = busca( this->m_root, key );
+    // Node * key_holder = busca( this->m_root, key );
+
+    Node *key_holder = this->m_root;    // initial key_holder
+
+    while( key_holder != nullptr && key_holder->key != key ){
+        if( key_holder->key < key ){
+            key_holder = key_holder->r;
+        } else if ( key_holder->key > key ){
+            key_holder = key_holder->l;
+        } else {
+            std::cerr << "Not predicted (on iteractive remove)\n";
+        }
+    }
+
     if( key_holder == nullptr ){
         std::cerr << "ERROR[15]: Key not found! Not removing" << std::endl;
         return;
@@ -157,27 +170,33 @@ void bst<T>::remove(key_type key)   // TODO: Make arrangments if the node == m_r
 
         // now, let's remove the son!
         delete key_holder;
+        this->m_size--;
     }
-    else if( key_holder->l == nullptr ^ key_holder->r == nullptr ){
+    else if( (key_holder->l == nullptr) ^ (key_holder->r == nullptr) ){
         // either r or l are null, not both
         if( key_holder->l == nullptr ){
             // right node will substitute his father
             key_holder->key = key_holder->r->key;
+            Node * to_be_deleted = key_holder->r;
 
             // simple mapping
             Node * right_son = key_holder->r->r;
             Node * left_son = key_holder->r->l;
 
             // link the key_holder as father for both son's 
-            makeFather(key_holder, left_son, right_son);    // DOING
+            makeFather(key_holder, left_son, right_son);
 
             // now make both son's of father (key_holder)
             key_holder->r = right_son;
             key_holder->l = left_son;
 
+            delete to_be_deleted;
+            this->m_size--;
+
         } else {
             // left node will substitute his father 
             key_holder->key = key_holder->l->key;
+            Node * to_be_deleted = key_holder->r;
 
             // simple mapping
             Node * right_son = key_holder->l->r;
@@ -189,6 +208,9 @@ void bst<T>::remove(key_type key)   // TODO: Make arrangments if the node == m_r
             // now make both son's of father (key_holder)
             key_holder->r = right_son;
             key_holder->l = left_son;
+
+            delete to_be_deleted;
+            this->m_size--;
         }
     } else {
         // the node we want to remove has both sons
@@ -205,12 +227,14 @@ void bst<T>::remove(key_type key)   // TODO: Make arrangments if the node == m_r
         if( father_pred->r == pred ){
             // pred is the right son of father_pred
             father_pred->r = nullptr;
-            // delete pred;
+            delete pred;
         } else if ( father_pred->l == pred ){
             // pred is the left son of father_pred
             father_pred->l = nullptr;
-            // delete pred;
+            delete pred;
         }
+
+        this->m_size--;
     }
 }
 
@@ -219,6 +243,7 @@ template< typename T >
 T bst<T>::nthElement( size_t n )
 {
     // TODO
+    return T();     // stub
 }
 
 //!< Returns position occupied by value, with in-order path.
@@ -226,12 +251,14 @@ template< typename T >
 int bst<T>::position( T value )
 {
     // TODO
+    return int();   // stub
 }
 
 template< typename T >
 T bst<T>::median()
 {
     // TODO
+    return T();     // stub
 }
 
 //!< Returns True if the bst is a full tree. False otherwise
@@ -239,6 +266,7 @@ template< typename T >
 bool bst<T>::isFull()
 {
     // TODO
+    return true;   // stub
 }
 
 //!< Returns True if the bst is a complete tree. False otherwise.
@@ -246,6 +274,7 @@ template< typename T >
 bool bst<T>::isComplete()
 {
     // TODO
+    return true;    // stub
 }
 
 //!< Returns a string cointaning the bst travelling sequence by level.
@@ -254,7 +283,7 @@ std::string bst<T>::toString()
 {
     std::string buf;
     std::queue<Node *> to_print;
-    if(this->m_root == nullptr){
+    if(this->m_root == nullptr || this->m_size == 0){
         return buf;
     }
 

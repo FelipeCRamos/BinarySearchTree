@@ -22,7 +22,6 @@ class bst
             Node *f = nullptr;                      // Origin node (or father)
 
             Node(key_type n_key) : key(n_key){};    // default constructor
-            ~Node(){ /* delete l; delete r; delete f; */ };         // default destructor
 		};
 
 		size_t m_size;	        // Number of nodes.
@@ -49,7 +48,7 @@ class bst
         bst( bst<T> &rhs );
 
 		//!< Destructor
-        ~bst(){ /* empty */};
+        ~bst(){ delete this->m_root; };
         
 		//!< Searches for a specific value inside tree.
 		Node find( T key ){ return busca(this->m_root, key); }; // need to return index, not node

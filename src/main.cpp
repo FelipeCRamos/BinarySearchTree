@@ -9,7 +9,8 @@ enum func_code{
     iscomp,
     print,
     remov,
-    insert
+    insert,
+    none
 };
 
 func_code hashit( std::string const &str_c ){
@@ -21,6 +22,8 @@ func_code hashit( std::string const &str_c ){
     if( str_c == "IMPRIMA" ) return print;
     if( str_c == "REMOVA" ) return remov;
     if( str_c == "INSIRA" ) return insert;
+
+    return none;    // none matched
 }
 
 int main( int argc, char **argv )
@@ -86,12 +89,12 @@ int main( int argc, char **argv )
                 std::cout << tree.toString() << std::endl;
                 break;
             case remov:
-                // function to be called
+                tree.remove( i.second );
                 break;
             case insert:
                 tree.add( i.second );
                 break;
-            default:
+            case none:
                 std::cout << "Sorry, command " << i.first
 						  << " isn't known!\n Try a valid command.\n";
         }
@@ -102,15 +105,13 @@ int main( int argc, char **argv )
 
     std::cout << tree.toString() << std::endl;
 
+    // temporary tests
     int vec[] = { 10, 5, 12, 3, 9, 11, 27 };
     for( auto &i : vec ){
-        std::cout << "Removing " << i << std::endl;
+        std::cout << "\n~ Removing " << i << std::endl;
         tree.remove(i);
-        std::cout << tree.toString() << std::endl;
+        std::cout << "Result tree: " << tree.toString() << std::endl;
     }
-    std::cout << tree.toString() << std::endl;
-
-
 
 	return 0;
 }
