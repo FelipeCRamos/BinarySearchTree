@@ -15,15 +15,23 @@ class bst
 	private:
 		struct Node{
 			key_type key;	        // Key of the node
-			T value;                // Node content (TODO: ask silvia)
 			
-			Node *l = nullptr;	                    // Left sub-tree.
-			Node *r = nullptr;	                    // Right sub-tree.
-            Node *f = nullptr;                      // Origin node (or father)
+			Node *l = nullptr;		// Left sub-tree.
+			Node *r = nullptr;		// Right sub-tree.
+            Node *f = nullptr;		// Origin node (or father)
+
+			size_t sub_l;			// Number os nodes in the left sub-tree
+			size_t sub_r;			// Number of nodes in the right sub_tree
 
             Node(key_type n_key) : key(n_key){};    // default constructor
 		};
 
+		//!< Enum for tree updates purposes.
+		enum code_t {
+				INSERT=0,
+				REMOVE
+		};
+		
 		size_t m_size;	        // Number of nodes.
 		Node * m_root;	        // Tree root node.
         Node * auxiliar_node;   // Auxiliar node, used in some functions
@@ -32,14 +40,14 @@ class bst
         void add_son( Node *& father, Node *& son );
 	
         //!< Insert function
-		bool insert( Node*& root, key_type key/* , T value */ );
         bool p_remove( Node *& root );
         Node * find_pred( Node *& actual );
         void makeFather( Node *& father, Node *& l_son, Node *& r_son );
-
-		//!< Private function for find
-		Node * busca( Node *&, key_type );
-
+		/* Private functions{{{*/
+		Node * busca( Node *&, key_type );	//!< For find
+		bool insert( Node*&, key_type );	//!< For add
+		void exclude( Node*&, key_type );	//!< For remove
+		/*}}}*/
 	public:
 		//!< Void Constructor
         bst();
@@ -49,24 +57,26 @@ class bst
 
 		//!< Destructor
         ~bst(){ delete this->m_root; };
-        
-		//!< Searches for a specific value inside tree.
-		Node find( T key ){ return busca(this->m_root, key); }; // need to return index, not node
+
+		/* Standard methods{{{*/
+		//!< Searches for a specific value inside tree./
+		Node find( T key ){ return busca(this->m_root, key); };
 
         //!< Add key to the binary tree
         bool add( key_type key ){ return insert(this->m_root, key); };
 
         //!< Remove function
-		void remove( key_type key );
+		void remove( key_type key ){ return exclude(this->m_root, key); };
+		/*}}}*/
 
 		//!< Returns nth element, going from 1 with in-order path of bst.
-		T nthElement( size_t n );
+		key_type nthElement( size_t n );
 
-		//!< Returns position occupied by value, with in-order path.
-		int position( T value );
+		//!< Returns position occupied by key, with in-order path.
+		int position( key_type key );
 
         //!< Returns the median of the Tree
-		T median();
+		key_type median();
 
 		//!< Returns True if the bst is a full tree. False otherwise
 		bool isFull();

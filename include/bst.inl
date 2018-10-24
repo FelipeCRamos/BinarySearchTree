@@ -28,6 +28,37 @@ void bst<T>::add_son( Node *& father, Node *& son ){
     }
 }
 
+template <typename T>
+void bst<T>::update( Node*& actual, code_t type )
+{
+	while( actual->f != nullptr )
+	{
+		if(actual->f->r == actual)
+		{
+			if(type == INSERT) actual->f->sub_r++;
+			else if(type == REMOVE) actual->f->sub_r--;
+			else
+			{
+				std::cerr << "Que merda tu ta passando?Tá cheirando coco, seu bosta?\n";
+			}
+		}
+		else if(actual->f->l == actual)
+		{
+			if(type == INSERT) actual->f->sub_l++;
+			else if(type == REMOVE) actual->f->sub_l--;
+			else
+			{
+				std::cerr << "Que merda tu ta passando?Tá cheirando coco, seu bosta?\n";
+			}
+		}
+		else
+		{
+			std::cerr << "Man n tem como entrar nesse else. Então fodasse\n";
+		}
+		actual = actual->f;
+	}
+}
+
 //!< Void constructor
 template <typename T>
 bst<T>::bst(void){
@@ -37,7 +68,7 @@ bst<T>::bst(void){
 
 //!< Searches for a specific value inside tree.
 template< typename T >
-typename bst<T>::Node * bst<T>::busca( Node *& root, key_type key )
+typename bst<T>::Node* bst<T>::busca( Node *& root, key_type key )
 {
 	if( this->m_size == 0 or root == nullptr ){
 		std::cerr << "ERROR[010]: Key not present in tree! Try another key.\n";
@@ -55,7 +86,7 @@ typename bst<T>::Node * bst<T>::busca( Node *& root, key_type key )
 }
 
 template< typename T >
-bool bst<T>::insert( Node *& root, key_type key/* , T value */ )
+bool bst<T>::insert( Node *& root, key_type key )
 {
     if( this->m_size == 0 ){        // it's an empty tree
         this->m_root = new Node(key);
@@ -76,6 +107,7 @@ bool bst<T>::insert( Node *& root, key_type key/* , T value */ )
                 std::cout << "\tLeft son: " << root->l << std::endl;
                 std::cout << "\tRight son: " << root->r << std::endl;
             }
+			update(root, code_t::INSERT);
             return true;
             
         } else if ( root->key < key ){
@@ -128,7 +160,7 @@ typename bst<T>::Node * bst<T>::find_pred( Node *& actual ){
 }
 
 template< typename T >
-void bst<T>::remove(key_type key)   // TODO: Make arrangments if the node == m_root
+void bst<T>::exclude( Node*& root, key_type key)   // TODO: Make arrangments if the node == m_root
 {
     // find the node that has the key
     // Node * key_holder = busca( this->m_root, key );
@@ -248,10 +280,10 @@ T bst<T>::nthElement( size_t n )
 
 //!< Returns position occupied by value, with in-order path.
 template< typename T >
-int bst<T>::position( T value )
+int bst<T>::position( key_type key )
 {
-    // TODO
-    return int();   // stub
+	Node* no = busca(this->root, key);
+	return (no->key > this->m_root->key) ? no->sub_l + this->m_root->sub_l + 2 : no->sub_l + 1;
 }
 
 template< typename T >
