@@ -254,6 +254,9 @@ std::string bst<T>::toString()
 {
     std::string buf;
     std::queue<Node *> to_print;
+    if(this->m_root == nullptr){
+        return buf;
+    }
 
     to_print.push(this->m_root);
     while(!to_print.empty())
