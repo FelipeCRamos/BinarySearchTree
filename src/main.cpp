@@ -97,7 +97,6 @@ int main( int argc, char **argv )
         }
     }
 
-	// tree.find(5);
 	std::cout << "\n\033[1;32mOperations finished successfully!\033[0m\n";
 
     std::cout << tree.toString() << std::endl;

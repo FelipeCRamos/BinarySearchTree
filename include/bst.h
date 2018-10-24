@@ -33,13 +33,15 @@ class bst
         void add_son( Node *& father, Node *& son );
 	
         //!< Insert function
-		bool insert( Node*& root, key_type key/* , T value */ );
         bool p_remove( Node *& root );
         Node * find_pred( Node *& actual );
         void makeFather( Node *& father, Node *& l_son, Node *& r_son );
 
-		//!< Private function for find
-		Node * busca( Node *&, key_type );
+		/* Private functions{{{*/
+		Node * busca( Node *&, key_type );	//!< For find
+		bool insert( Node*&, key_type );	//!< For add
+		void exclude( Node*&, key_type );	//!< For remove
+		/*}}}*/
 
 	public:
 		//!< Void Constructor
@@ -51,14 +53,16 @@ class bst
 		//!< Destructor
         ~bst(){ /* empty */};
         
-		//!< Searches for a specific value inside tree.
-		Node find( T key ){ return busca(this->m_root, key); }; // need to return index, not node
+		/* Standard methods{{{*/
+		//!< Searches for a specific value inside tree./
+		Node find( T key ){ return busca(this->m_root, key); };
 
         //!< Add key to the binary tree
         bool add( key_type key ){ return insert(this->m_root, key); };
 
         //!< Remove function
-		void remove( key_type key );
+		void remove( key_type key ){ return exclude(this->m_root, key); };
+		/*}}}*/
 
 		//!< Returns nth element, going from 1 with in-order path of bst.
 		T nthElement( size_t n );

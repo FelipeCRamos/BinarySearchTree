@@ -128,90 +128,80 @@ typename bst<T>::Node * bst<T>::find_pred( Node *& actual ){
 }
 
 template< typename T >
-void bst<T>::remove(key_type key)   // TODO: Make arrangments if the node == m_root
+void bst<T>::exclude( Node*& root, key_type key)   // TODO: Make arrangments if the node == m_root
 {
-    // find the node that has the key
-    Node * key_holder = busca( this->m_root, key );
-    if( key_holder == nullptr ){
-        std::cerr << "ERROR[15]: Key not found! Not removing" << std::endl;
-        return;
-    }
-
-    if( key_holder->l == nullptr && key_holder->r == nullptr ){
-        // just remove-it
-        Node * father = key_holder->f;
-
-        // this if-else is to remove the link from father->son
-        if( father != nullptr && father->r == key_holder ){
-            // it's the right son!
-            father->r = nullptr;    // remove link from father
-        } else if( father != nullptr && father->l == key_holder ){
-            // it's the left son!
-            father->l = nullptr;    // remove link from father
-        } else if( father == nullptr ){
-            // no nothing (it's already the root)
-        } else {
-            std::cerr << "ERROR[05]: Not predicted this one! Please report!\n";
-            return;
-        }
-
-        // now, let's remove the son!
-        delete key_holder;
-    }
-    else if( key_holder->l == nullptr ^ key_holder->r == nullptr ){
-        // either r or l are null, not both
-        if( key_holder->l == nullptr ){
-            // right node will substitute his father
-            key_holder->key = key_holder->r->key;
-
-            // simple mapping
-            Node * right_son = key_holder->r->r;
-            Node * left_son = key_holder->r->l;
-
-            // link the key_holder as father for both son's 
-            makeFather(key_holder, left_son, right_son);    // DOING
-
-            // now make both son's of father (key_holder)
-            key_holder->r = right_son;
-            key_holder->l = left_son;
-
-        } else {
-            // left node will substitute his father 
-            key_holder->key = key_holder->l->key;
-
-            // simple mapping
-            Node * right_son = key_holder->l->r;
-            Node * left_son = key_holder->l->l;
-
-            // link the key_holder as father for both son's
-            makeFather(key_holder, left_son, right_son);
-
-            // now make both son's of father (key_holder)
-            key_holder->r = right_son;
-            key_holder->l = left_son;
-        }
-    } else {
-        // the node we want to remove has both sons
-        // find predecessor
-        Node * pred = find_pred(key_holder);
-
-        // change current node with predecessor
-        key_holder->key = pred->key;
-
-        // remove predecessor
-        Node * father_pred = pred->f;
-        // std::cout << "Case 3.07\n";
-
-        if( father_pred->r == pred ){
-            // pred is the right son of father_pred
-            father_pred->r = nullptr;
-            // delete pred;
-        } else if ( father_pred->l == pred ){
-            // pred is the left son of father_pred
-            father_pred->l = nullptr;
-            // delete pred;
-        }
-    }
+	if(this->m_size == 0 or root == nullptr )
+	{
+		std::cerr << "ERROR[010]: Key not present in tree! Try another key.\n";
+		return;
+	}
+	if(root->key < key )
+	{
+		if(root->r != nullptr)
+		{
+			exclude(root->r, key);
+		}
+		std::cerr << "ERROR[010]: Key not present in tree! Try another key.\n";
+		return;
+	}
+	else if(root->key > key)
+	{
+		if(root->l != nullptr)
+		{
+			exclude(root->l, key);
+		}
+		std::cerr << "ERROR[010]: Key not present in tree! Try another key.\n";
+		return;
+	}
+	else
+	{
+		// Reached node to remove. Now we have 3 cases.
+		if( root->l == nullptr )
+		{
+			if(root->r == nullptr )
+			{
+				// Removable key has no children.
+				// Now see if removable is a left or right.
+				if(root->f->r == root)
+				{
+					root->f->r = nullptr;
+					return;
+				}
+				root->f->l = nullptr;
+				return;
+			}
+			// Removable key has only a right children
+			// Now see if removable is a left or right child.
+			if(root->f->r == root)
+			{
+				root->f->r = root->r;
+				return;
+			}
+			root->f->l = root->r;
+			return;
+		}
+		else if( root->r == nullptr )
+		{
+			// Removable key has only a left children
+			// Now see if removable is a left or right child.
+			if(root->f->r == root)
+			{
+				root->f->r = root->l;
+				return;
+			}
+			root->f->l = root->l;
+			return;
+		}
+		else
+		{
+			// Removable has both right and left children.
+			// In this case, we need to find the right value for exchange.
+			auto pred = find_pred(root);
+			root->key = pred->key;
+			pred->f->r = nullptr;
+			return;
+		}
+	}
 }
 
 //!< Returns nent element, going from 1 with in-order path of bst.
