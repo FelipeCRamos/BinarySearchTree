@@ -22,7 +22,7 @@ class bst
             Node *f = nullptr;                      // Origin node (or father)
 
             Node(key_type n_key) : key(n_key){};    // default constructor
-            ~Node(){ delete l; delete r; delete f; };         // default destructor
+            ~Node(){ /* delete l; delete r; delete f; */ };         // default destructor
 		};
 
 		size_t m_size;	        // Number of nodes.
@@ -36,6 +36,7 @@ class bst
 		bool insert( Node*& root, key_type key/* , T value */ );
         bool p_remove( Node *& root );
         Node * find_pred( Node *& actual );
+        void makeFather( Node *& father, Node *& l_son, Node *& r_son );
 
 		//!< Private function for find
 		Node * busca( Node *&, key_type );

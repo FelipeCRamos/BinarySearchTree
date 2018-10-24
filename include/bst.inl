@@ -99,6 +99,18 @@ bool bst<T>::insert( Node *& root, key_type key/* , T value */ )
 }
 
 template <typename T>
+void bst<T>::makeFather( Node *& father, Node *& l_son, Node *& r_son ){
+    if( l_son != nullptr ){
+        l_son->f = father;
+    }
+    if( r_son != nullptr ){
+        r_son->f = father;
+    }
+    father->r = r_son;
+    father->l = l_son;
+}
+
+template <typename T>
 typename bst<T>::Node * bst<T>::find_pred( Node *& actual ){
     Node *it = actual;
 
@@ -151,17 +163,32 @@ void bst<T>::remove(key_type key)   // TODO: Make arrangments if the node == m_r
         if( key_holder->l == nullptr ){
             // right node will substitute his father
             key_holder->key = key_holder->r->key;
-            // and then: remove link & delete node
-            delete key_holder->r;
-            key_holder->r = nullptr;
+
+            // simple mapping
+            Node * right_son = key_holder->r->r;
+            Node * left_son = key_holder->r->l;
+
+            // link the key_holder as father for both son's 
+            makeFather(key_holder, left_son, right_son);    // DOING
+
+            // now make both son's of father (key_holder)
+            key_holder->r = right_son;
+            key_holder->l = left_son;
 
         } else {
             // left node will substitute his father 
             key_holder->key = key_holder->l->key;
 
-            // and then: remove link & delete node
-            delete key_holder->l;
-            key_holder->l = nullptr;
+            // simple mapping
+            Node * right_son = key_holder->l->r;
+            Node * left_son = key_holder->l->l;
+
+            // link the key_holder as father for both son's
+            makeFather(key_holder, left_son, right_son);
+
+            // now make both son's of father (key_holder)
+            key_holder->r = right_son;
+            key_holder->l = left_son;
         }
     } else {
         // the node we want to remove has both sons
