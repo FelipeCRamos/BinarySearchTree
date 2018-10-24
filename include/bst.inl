@@ -85,8 +85,22 @@ bool bst<T>::insert( Node *& root, key_type key/* , T value */ )
     return false;
 }
 
+template <typename T>
+typename bst<T>::Node * bst<T>::find_pred( Node *& actual ){
+    Node *it = actual;
+    if( actual->l != nullptr ){
+        it = actual->l;
+    } else {
+        return actual;
+    }
+    while( it->r != nullptr ){
+        it = it->r;
+    }
+    return it;
+}
+
 template< typename T >
-void bst<T>::remove(key_type key)
+void bst<T>::remove(key_type key)   // TODO: Make arrangments if the node == m_root
 {
     // find the node that has the key
     Node * key_holder /*= find(key)*/;
@@ -115,11 +129,36 @@ void bst<T>::remove(key_type key)
         // either r or l are null, not both
         if( key_holder->l == nullptr ){
             // right node will substitute his father
+            key_holder->key = key_holder->r;
+            // and then: remove link & delete node
+            delete key_holder->r;
+            key_holder->r = nullptr;
+
         } else {
             // left node will substitute his father 
+            key_holder->key = key_holder->l;
+
+            // and then: remove link & delete node
+            delete key_holder->l;
+            key_holder->l = nullptr;
         }
     } else {
         // the node we want to remove has both sons, TODO
+        // find predecessor
+        Node * pred = find_pred(key_holder);
+        // change current node with predecessor
+        key_holder->key = pred->key;
+        // remove predecessor
+        Node * father_pred = pred->f;
+        if( father_pred->r == pred ){
+            // pred is the right son of father_pred
+            father_pred->r = nullptr;
+            delete pred;
+        } else if ( father_pred->l == pred ){
+            // pred is the left son of father_pred
+            father_pred->l = nullptr;
+            delete pred;
+        }
     }
 }
 

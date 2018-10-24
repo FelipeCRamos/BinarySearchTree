@@ -20,7 +20,7 @@ class bst
 			Node *r = nullptr;	                    // Right sub-tree.
             Node *f = nullptr;                      // Origin node (or father)
             Node(key_type n_key) : key(n_key){};    // default constructor
-            ~Node(){ delete l; delete r; };         // default destructor
+            ~Node(){ delete l; delete r; delete f; };         // default destructor
 		};
 
 		size_t m_size;	        // Number of nodes.
@@ -33,6 +33,7 @@ class bst
         //!< Insert function
 		bool insert( Node*& root, key_type key/* , T value */ );
         bool p_remove( Node *& root );
+        Node * find_pred( Node *& actual );
 
 	public:
 		//!< Void Constructor
