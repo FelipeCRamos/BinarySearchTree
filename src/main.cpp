@@ -97,8 +97,20 @@ int main( int argc, char **argv )
         }
     }
 
-	tree.find(5);
+	// tree.find(5);
 	std::cout << "\n\033[1;32mOperations finished successfully!\033[0m\n";
+
+    std::cout << tree.toString() << std::endl;
+
+    int vec[] = { 10, 5, 12, 3, 9, 11, 27 };
+    for( auto &i : vec ){
+        std::cout << "Removing " << i << std::endl;
+        tree.remove(i);
+        std::cout << tree.toString() << std::endl;
+    }
+    std::cout << tree.toString() << std::endl;
+
+
 
 	return 0;
 }

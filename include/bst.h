@@ -38,7 +38,7 @@ class bst
         Node * find_pred( Node *& actual );
 
 		//!< Private function for find
-		Node busca( Node*& root, T key );
+		Node * busca( Node *&, key_type );
 
 	public:
 		//!< Void Constructor
@@ -51,7 +51,7 @@ class bst
         ~bst(){ /* empty */};
         
 		//!< Searches for a specific value inside tree.
-		Node find( T key ){ return busca(this->m_root, key); };
+		Node find( T key ){ return busca(this->m_root, key); }; // need to return index, not node
 
         //!< Add key to the binary tree
         bool add( key_type key ){ return insert(this->m_root, key); };

@@ -37,27 +37,20 @@ bst<T>::bst(void){
 
 //!< Searches for a specific value inside tree.
 template< typename T >
-typename bst<T>::Node bst<T>::busca( Node *&root, T key )
+typename bst<T>::Node * bst<T>::busca( Node *& root, key_type key )
 {
-	if( this->m_size == 0 or root == nullptr )
-	{
-		std::cerr << "ERROR[010]: Key not present in tree!Try another key.\n";
-		return bst<T>::Node(key);
-	}	
-	else if( root->key < key )
-	{
-		busca( root->r, key );		// key is bigger than
-	}
-	else if( root->key > key )	// key is smaller than
-	{
-		busca( root->l, key );
-	}
-	else if( root->key == key )	// key found
-	{
-		return key;//wtf?? return root; N roda?!?
-	}
-	else {
+	if( this->m_size == 0 or root == nullptr ){
+		std::cerr << "ERROR[010]: Key not present in tree! Try another key.\n";
+		return nullptr;
+    } else if( root->key < key ) {      // key is bigger than
+		return busca(root->r, key);		
+	} else if( root->key > key ) {      // key is smaller than
+		return busca(root->l, key);
+	} else if( root->key == key ) {     // key found
+		return root;
+	} else {
 		std::cerr << "ERROR[011]: Not predicted this case, please report!\n";
+		return nullptr;
 	}
 }
 
@@ -108,14 +101,17 @@ bool bst<T>::insert( Node *& root, key_type key/* , T value */ )
 template <typename T>
 typename bst<T>::Node * bst<T>::find_pred( Node *& actual ){
     Node *it = actual;
+
     if( actual->l != nullptr ){
         it = actual->l;
     } else {
         return actual;
     }
+
     while( it->r != nullptr ){
         it = it->r;
     }
+
     return it;
 }
 
@@ -123,8 +119,11 @@ template< typename T >
 void bst<T>::remove(key_type key)   // TODO: Make arrangments if the node == m_root
 {
     // find the node that has the key
-    Node * key_holder /*= find(key)*/;
-    // call for private recurssive function
+    Node * key_holder = busca( this->m_root, key );
+    if( key_holder == nullptr ){
+        std::cerr << "ERROR[15]: Key not found! Not removing" << std::endl;
+        return;
+    }
 
     if( key_holder->l == nullptr && key_holder->r == nullptr ){
         // just remove-it
@@ -151,35 +150,39 @@ void bst<T>::remove(key_type key)   // TODO: Make arrangments if the node == m_r
         // either r or l are null, not both
         if( key_holder->l == nullptr ){
             // right node will substitute his father
-            key_holder->key = key_holder->r;
+            key_holder->key = key_holder->r->key;
             // and then: remove link & delete node
             delete key_holder->r;
             key_holder->r = nullptr;
 
         } else {
             // left node will substitute his father 
-            key_holder->key = key_holder->l;
+            key_holder->key = key_holder->l->key;
 
             // and then: remove link & delete node
             delete key_holder->l;
             key_holder->l = nullptr;
         }
     } else {
-        // the node we want to remove has both sons, TODO
+        // the node we want to remove has both sons
         // find predecessor
         Node * pred = find_pred(key_holder);
+
         // change current node with predecessor
         key_holder->key = pred->key;
+
         // remove predecessor
         Node * father_pred = pred->f;
+        // std::cout << "Case 3.07\n";
+
         if( father_pred->r == pred ){
             // pred is the right son of father_pred
             father_pred->r = nullptr;
-            delete pred;
+            // delete pred;
         } else if ( father_pred->l == pred ){
             // pred is the left son of father_pred
             father_pred->l = nullptr;
-            delete pred;
+            // delete pred;
         }
     }
 }
