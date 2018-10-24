@@ -111,12 +111,14 @@ void bst<T>::remove(key_type key)   // TODO: Make arrangments if the node == m_r
         Node * father = key_holder->f;
 
         // this if-else is to remove the link from father->son
-        if( father->r == key_holder ){
+        if( father != nullptr && father->r == key_holder ){
             // it's the right son!
             father->r = nullptr;    // remove link from father
-        } else if( father->l == key_holder ){
+        } else if( father != nullptr && father->l == key_holder ){
             // it's the left son!
             father->l = nullptr;    // remove link from father
+        } else if( father == nullptr ){
+            // no nothing (it's already the root)
         } else {
             std::cerr << "ERROR[05]: Not predicted this one! Please report!\n";
             return;
