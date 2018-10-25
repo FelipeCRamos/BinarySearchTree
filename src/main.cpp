@@ -76,7 +76,7 @@ int main( int argc, char **argv )
 				tree.position( i.second );
                 break;
             case median:
-                // function to be called
+                std::cout << "Median element: " << tree.median() << std::endl;
                 break;
             case isfull:
                 // function to be called
@@ -85,13 +85,15 @@ int main( int argc, char **argv )
                 // function to be called
                 break;
             case print:
-                // function to be called
-                std::cout << tree.toString() << std::endl;
+                std::cout << "Current tree by level: " 
+                    << tree.toString() << std::endl;
                 break;
             case remov:
+                std::cout << "Removing " << i.second << std::endl;
                 tree.remove( i.second );
                 break;
             case insert:
+                std::cout << "Inserting " << i.second << std::endl;
                 tree.add( i.second );
                 break;
             case none:
@@ -110,8 +112,9 @@ int main( int argc, char **argv )
         std::cout << "\n~ Removing " << i << std::endl;
         tree.remove(i);
         std::cout << "Result tree: " << tree.toString() << std::endl;
+        std::cout << "Posicao de 27 = " << tree.position(27) << std::endl;
+
     }
 
-//	std::cout << "4 = " << tree.position(4);
 	return 0;
 }

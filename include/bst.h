@@ -5,9 +5,10 @@
 #include <fstream>
 #include <queue>
 #include <string>
+#include <algorithm>
+#include <cmath>
 
 #define key_type long int
-#define log true
 
 template <typename T>
 class bst

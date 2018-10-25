@@ -2,7 +2,7 @@
 
 #include "bst.h"
 
-#define log true   // Log for debug
+#define log false   // Log for debug
 
 template <typename T>
 void bst<T>::add_son( Node *& father, Node *& son ){
@@ -203,6 +203,7 @@ void bst<T>::exclude( Node*& root, key_type key)   // TODO: Make arrangments if 
         }
 
         // now, let's remove the son!
+        update(key_holder, REMOVE);
         delete key_holder;
         this->m_size--;
     }
@@ -226,11 +227,11 @@ void bst<T>::exclude( Node*& root, key_type key)   // TODO: Make arrangments if 
 
             delete to_be_deleted;
             this->m_size--;
-
+            update(key_holder, REMOVE);
         } else {
             // left node will substitute his father 
             key_holder->key = key_holder->l->key;
-            Node * to_be_deleted = key_holder->r;
+            Node * to_be_deleted = key_holder->l;
 
             // simple mapping
             Node * right_son = key_holder->l->r;
@@ -245,6 +246,7 @@ void bst<T>::exclude( Node*& root, key_type key)   // TODO: Make arrangments if 
 
             delete to_be_deleted;
             this->m_size--;
+            update(key_holder, REMOVE);
         }
     } else {
         // the node we want to remove has both sons
@@ -258,6 +260,7 @@ void bst<T>::exclude( Node*& root, key_type key)   // TODO: Make arrangments if 
         Node * father_pred = pred->f;
         // std::cout << "Case 3.07\n";
 
+        update(pred, REMOVE);
         if( father_pred->r == pred ){
             // pred is the right son of father_pred
             father_pred->r = nullptr;
@@ -267,7 +270,6 @@ void bst<T>::exclude( Node*& root, key_type key)   // TODO: Make arrangments if 
             father_pred->l = nullptr;
             delete pred;
         }
-
         this->m_size--;
     }
 }
@@ -290,17 +292,47 @@ int bst<T>::position( key_type key )
 
 	if( no != nullptr )
 	{
-	return (no->key > this->m_root->key) ? no->sub_l + this->m_root->sub_l + 2 : no->sub_l + 1;
+        return (no->key > this->m_root->key) ? no->sub_l + this->m_root->sub_l + 2 : no->sub_l + 1;
 	}
 	else
-	{ return -1;}
+    { 
+        return -1;
+    }
 }
 
 template< typename T >
 key_type bst<T>::median()
 {
-    // TODO
-    return T();     // stub
+    std::vector<key_type> all;
+    std::queue<Node *> to_print;
+    
+    if( this->m_root == nullptr || this->m_size == 0 ){
+        std::cerr << "ERROR [019]: Tree is empty, has no median element.\n";
+        return 0;
+    }
+
+    to_print.push(this->m_root);
+    while(!to_print.empty())
+    {
+        Node *actual = to_print.front();
+        to_print.pop();
+
+        all.push_back(actual->key);
+
+        if(actual->l != nullptr){
+            to_print.push(actual->l);
+        }
+        if(actual->r != nullptr){
+            to_print.push(actual->r);
+        }
+    }    
+
+    size_t size = all.size();
+    if( size % 2 == 0 ){
+        return std::min(all[size/2], all[(size/2)+1]);
+    } else {
+        return all[ceil(size/2)];
+    }
 }
 
 //!< Returns True if the bst is a full tree. False otherwise
