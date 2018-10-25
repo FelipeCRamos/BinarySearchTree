@@ -110,9 +110,9 @@ int main( int argc, char **argv )
     int vec[] = { 10, 5, 12, 3, 9, 11, 27 };
     for( auto &i : vec ){
         std::cout << "\n~ Removing " << i << std::endl;
+        std::cout << "Posicao de " << i << " = " << tree.position(i) << std::endl;
         tree.remove(i);
         std::cout << "Result tree: " << tree.toString() << std::endl;
-        std::cout << "Posicao de 27 = " << tree.position(27) << std::endl;
 
     }
 
