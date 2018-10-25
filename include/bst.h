@@ -7,7 +7,7 @@
 #include <string>
 
 #define key_type long int
-#define log false
+#define log true
 
 template <typename T>
 class bst
@@ -20,8 +20,8 @@ class bst
 			Node *r = nullptr;		// Right sub-tree.
             Node *f = nullptr;		// Origin node (or father)
 
-			size_t sub_l;			// Number os nodes in the left sub-tree
-			size_t sub_r;			// Number of nodes in the right sub_tree
+			size_t sub_l = 0;			// Number os nodes in the left sub-tree
+			size_t sub_r = 0;			// Number of nodes in the right sub_tree
 
             Node(key_type n_key) : key(n_key){};    // default constructor
 		};
@@ -43,6 +43,9 @@ class bst
         bool p_remove( Node *& root );
         Node * find_pred( Node *& actual );
         void makeFather( Node *& father, Node *& l_son, Node *& r_son );
+
+		//!< Auxiliary function for updating tree informations.
+		void update(Node*&, code_t);
 		/* Private functions{{{*/
 		Node * busca( Node *&, key_type );	//!< For find
 		bool insert( Node*&, key_type );	//!< For add

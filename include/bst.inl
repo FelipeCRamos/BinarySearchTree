@@ -2,7 +2,7 @@
 
 #include "bst.h"
 
-#define log false   // Log for debug
+#define log true   // Log for debug
 
 template <typename T>
 void bst<T>::add_son( Node *& father, Node *& son ){
@@ -31,21 +31,23 @@ void bst<T>::add_son( Node *& father, Node *& son ){
 template <typename T>
 void bst<T>::update( Node*& actual, code_t type )
 {
-	while( actual->f != nullptr )
+	Node *it = actual;
+	while( it->f != nullptr )
 	{
-		if(actual->f->r == actual)
+		std::cout << it->key << std::endl;
+		if(it->f->r == it)
 		{
-			if(type == INSERT) actual->f->sub_r++;
-			else if(type == REMOVE) actual->f->sub_r--;
+			if(type == INSERT) it->f->sub_r += 1;
+			else if(type == REMOVE) it->f->sub_r -= 1;
 			else
 			{
 				std::cerr << "Que merda tu ta passando?Tá cheirando coco, seu bosta?\n";
 			}
 		}
-		else if(actual->f->l == actual)
+		else if(it->f->l == it)
 		{
-			if(type == INSERT) actual->f->sub_l++;
-			else if(type == REMOVE) actual->f->sub_l--;
+			if(type == INSERT) it->f->sub_l += 1;
+			else if(type == REMOVE) it->f->sub_l -= 1;
 			else
 			{
 				std::cerr << "Que merda tu ta passando?Tá cheirando coco, seu bosta?\n";
@@ -55,7 +57,7 @@ void bst<T>::update( Node*& actual, code_t type )
 		{
 			std::cerr << "Man n tem como entrar nesse else. Então fodasse\n";
 		}
-		actual = actual->f;
+		it = it->f;
 	}
 }
 
@@ -272,7 +274,7 @@ void bst<T>::exclude( Node*& root, key_type key)   // TODO: Make arrangments if 
 
 //!< Returns nent element, going from 1 with in-order path of bst.
 template< typename T >
-T bst<T>::nthElement( size_t n )
+key_type bst<T>::nthElement( size_t n )
 {
     // TODO
     return T();     // stub
@@ -282,12 +284,20 @@ T bst<T>::nthElement( size_t n )
 template< typename T >
 int bst<T>::position( key_type key )
 {
-	Node* no = busca(this->root, key);
+	Node* no = busca(this->m_root, key);
+
+//	std::cout << no->sub_r << std::endl;
+
+	if( no != nullptr )
+	{
 	return (no->key > this->m_root->key) ? no->sub_l + this->m_root->sub_l + 2 : no->sub_l + 1;
+	}
+	else
+	{ return -1;}
 }
 
 template< typename T >
-T bst<T>::median()
+key_type bst<T>::median()
 {
     // TODO
     return T();     // stub

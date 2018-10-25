@@ -73,7 +73,7 @@ int main( int argc, char **argv )
                 // tree.nthElement( i.second );    // example
                 break;
             case pos:
-                // function to be called
+				tree.position( i.second );
                 break;
             case median:
                 // function to be called
@@ -112,5 +112,6 @@ int main( int argc, char **argv )
         std::cout << "Result tree: " << tree.toString() << std::endl;
     }
 
+//	std::cout << "4 = " << tree.position(4);
 	return 0;
 }
