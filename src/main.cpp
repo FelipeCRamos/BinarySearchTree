@@ -73,7 +73,7 @@ int main( int argc, char **argv )
                 // tree.nthElement( i.second );    // example
                 break;
             case pos:
-				tree.position( i.second );
+				std::cout << "Position: " << tree.position( i.second ) << "\n";
                 break;
             case median:
                 std::cout << "Median element: " << tree.median() << std::endl;
@@ -107,12 +107,27 @@ int main( int argc, char **argv )
     std::cout << tree.toString() << std::endl;
 
     // temporary tests
-    int vec[] = { 10, 5, 12, 3, 9, 11, 27 };
+    int vec[] = { 10, 5, 12, 3, 9, 11, 27, 1, -44};
     for( auto &i : vec ){
         std::cout << "\n~ Removing " << i << std::endl;
         std::cout << "Posicao de " << i << " = " << tree.position(i) << std::endl;
         tree.remove(i);
         std::cout << "Result tree: " << tree.toString() << std::endl;
+
+		bst<int> avure;
+		avure.add(10);
+		avure.add(5);
+		avure.add(15);
+		avure.add(12);
+		avure.add(17);
+		avure.add(2);
+		avure.add(8);
+
+		std::cout << avure.isFull() << std::endl;
+
+		avure.remove(12);
+
+		std::cout << avure.isFull() << std::endl;
 
     }
 

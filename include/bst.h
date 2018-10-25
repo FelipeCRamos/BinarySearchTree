@@ -36,6 +36,7 @@ class bst
         // Control variables
 		size_t m_size;	        // Number of nodes.
 		Node * m_root;	        // Tree root node.
+		std::pair<size_t, size_t> m_height;	// Pair to store tree height and last level nodes.
 
         // Auxiliar variable
         Node * auxiliar_node;   // Auxiliar node, used in some functions
@@ -72,10 +73,10 @@ class bst
 		bool isFull();
 
 		//!< Returns True if the bst is a complete tree. False otherwise.
-		bool isComplete();
+		bool isComplete() const;
 
 		//!< Returns a string cointaning the bst travelling sequence by level.
-		std::string toString();
+		std::string toString() const;
 
     private:
         //!< A function to make the link between father & son nodes
