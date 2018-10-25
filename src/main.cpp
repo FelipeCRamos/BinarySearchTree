@@ -106,6 +106,10 @@ int main( int argc, char **argv )
 
     std::cout << tree.toString() << std::endl;
 
+    for( int i = 1; i <= tree.size(); i++ ){
+        std::cout << "Nth(" << i << "): " << tree.nthElement(i) << std::endl;
+    }
+
     // temporary tests
     int vec[] = { 10, 5, 12, 3, 9, 11, 27 };
     for( auto &i : vec ){
@@ -113,8 +117,9 @@ int main( int argc, char **argv )
         std::cout << "Posicao de " << i << " = " << tree.position(i) << std::endl;
         tree.remove(i);
         std::cout << "Result tree: " << tree.toString() << std::endl;
-
     }
+
+
 
 	return 0;
 }

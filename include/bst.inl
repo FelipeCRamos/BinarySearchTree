@@ -28,8 +28,25 @@ bst<T>::~bst( void ){
 template< typename T >
 key_type bst<T>::nthElement( size_t n ){
 /*{{{*/
-    // TODO
-    return T();     // stub
+    size_t acc = 1;
+    Node * curr = this->m_root;
+    std::stack<Node *> pool;
+    while( !pool.empty() || curr ){
+        if( curr ){
+            pool.push(curr);
+            curr = curr->l;
+        } else {
+            curr = pool.top();
+            pool.pop();
+            if( acc == n ){
+                return curr->key;
+            } else {
+                acc++;
+                curr = curr->r;
+            }
+        }
+    }
+    
 }
 /*}}}*/
 
@@ -132,6 +149,13 @@ std::string bst<T>::toString(){
     }    
 
     return buf;
+}
+/*}}}*/
+
+template <typename T>
+size_t bst<T>::size(){
+/*{{{*/
+    return this->m_size;
 }
 /*}}}*/
 
