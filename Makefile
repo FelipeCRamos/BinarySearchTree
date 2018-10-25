@@ -15,7 +15,7 @@ BINDIR = ./bin
 DOCDIR = ./Documentation
 
 # Macros
-CC = g++
+CC = g++	# for compatibility
 CFLAGS = -Wall -g -ggdb -std=c++11 -I. -I$(INCDIR)
 RM = -rm
 PROJ_NAME = bintree
