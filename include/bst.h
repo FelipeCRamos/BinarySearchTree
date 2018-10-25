@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <queue>
+#include <stack>
 #include <string>
 #include <algorithm>
 #include <cmath>
@@ -77,6 +78,9 @@ class bst
 
 		//!< Returns a string cointaning the bst travelling sequence by level.
 		std::string toString() const;
+
+        //!< Returns the number of elements that the tree has
+        size_t size();
 
     private:
         //!< A function to make the link between father & son nodes

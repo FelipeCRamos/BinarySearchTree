@@ -1,3 +1,4 @@
+#include <cassert>
 #include "bst.h"
 #include "parser.h"
 
@@ -106,6 +107,10 @@ int main( int argc, char **argv )
 
     std::cout << tree.toString() << std::endl;
 
+    for( int i = 1; i <= tree.size(); i++ ){
+        std::cout << "Nth(" << i << "): " << tree.nthElement(i) << std::endl;
+    }
+
     // temporary tests
     int vec[] = { 10, 5, 12, 3, 9, 11, 27, 1, -44};
     for( auto &i : vec ){
@@ -123,13 +128,15 @@ int main( int argc, char **argv )
 		avure.add(2);
 		avure.add(8);
 
-		std::cout << avure.isFull() << std::endl;
-
+		assert( 1 == avure.isFull() );
 		avure.remove(12);
 
-		std::cout << avure.isFull() << std::endl;
-
+		assert( 0 == avure.isFull() );
+		avure.add(14);
+		assert( 1 == avure.isFull() );
     }
+
+
 
 	return 0;
 }
