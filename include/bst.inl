@@ -41,7 +41,7 @@ void bst<T>::update( Node*& actual, code_t type )
 			else if(type == REMOVE) it->f->sub_r -= 1;
 			else
 			{
-				std::cerr << "Que merda tu ta passando?Tá cheirando coco, seu bosta?\n";
+				std::cerr << "ERROR: [D01]\n";
 			}
 		}
 		else if(it->f->l == it)
@@ -50,12 +50,12 @@ void bst<T>::update( Node*& actual, code_t type )
 			else if(type == REMOVE) it->f->sub_l -= 1;
 			else
 			{
-				std::cerr << "Que merda tu ta passando?Tá cheirando coco, seu bosta?\n";
+				std::cerr << "ERROR: [D02]\n";
 			}
 		}
 		else
 		{
-			std::cerr << "Man n tem como entrar nesse else. Então fodasse\n";
+            std::cerr << "ERROR: [D03]\n";
 		}
 		it = it->f;
 	}

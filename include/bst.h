@@ -59,7 +59,7 @@ class bst
         bst( bst<T> &rhs );
 
 		//!< Destructor
-        ~bst(){ delete this->m_root; };
+        ~bst(){ if( this->m_root != nullptr ) delete this->m_root; };
 
 		/* Standard methods{{{*/
 		//!< Searches for a specific value inside tree./
