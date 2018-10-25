@@ -88,7 +88,7 @@ class bst
         Node * find_pred( Node *& actual );
 
 		//!< Auxiliary function for updating tree informations.
-		void update(Node*&, code_t);
+		void update(Node *&, code_t);
 
         //!< An internal find function, to find an key on a given subtree
 		Node * i_find( Node *&, key_type );	//!< For find
