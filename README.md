@@ -47,7 +47,7 @@ In this version, we will support the following commands:
 - [x] Main.cpp organization
 - [x] Makefile/CmakeLists
 - [x] InputFile reading
-- [ ] Doxygen Documentation ***SuperLowPriority***
+- [ ] `Maneira de atualizar a altura da árvore e dos nós nas remoções`
 
 ## Compilation
 
@@ -63,6 +63,26 @@ make
 ./bintree [data-file] [command-file]
 # ex: ./bintree data/binary-tree.txt commands-set.txt
 ```
+
+## Report
+
+### Approaches Followed
+
+### Asymptotic Complexity Analysis
+
+We shall briefly explain all methods complexities, besides the standard binary search tree functions. Observe that this isn't a deep justification over complexity.
+
++ `nthElement()`:	TODO---F---TODO
+
++ `position()`:		TODO---E---TODO
+
++ `median()`:		TODO---L---TODO
+
++ `isFull()`:		TODO---I---TODO
+
++ `isComplete()`:	TODO---P---TODO
+
++ `toString()`:		TODO---E---TODO
 
 ## Authorship
 

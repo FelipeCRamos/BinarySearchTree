@@ -1,6 +1,3 @@
-#include <iostream>
-#include <cmath>
-
 #include "bst.h"
 
 #define log false   // Log for debug
@@ -13,7 +10,6 @@ bst<T>::bst( void ){
 /*{{{*/
     this->m_root = nullptr;
     this->m_size = 0;
-	this->m_height = std::make_pair(0,0);
 }
 /*}}}*/
 
@@ -48,7 +44,6 @@ key_type bst<T>::nthElement( size_t n ){
             }
         }
     }
-    
 }
 /*}}}*/
 
@@ -56,17 +51,7 @@ key_type bst<T>::nthElement( size_t n ){
 template< typename T >
 int bst<T>::position( key_type key ) {
 /*{{{*/
-	Node* no = i_find(this->m_root, key);
-    // std::cout << no->sub_r << std::endl;
-	if( no != nullptr ){
-        if( no->key > this->m_root->key ){
-            return no->sub_l + this->m_root->sub_l + 2;
-        } else {
-            return no->sub_l + 1;
-        }
-	} else { 
-        return -1;
-    }
+	//TODO
 }
 /*}}}*/
 
@@ -87,24 +72,56 @@ key_type bst<T>::median() {
 template< typename T >
 bool bst<T>::isFull() {
 /*{{{*/
-    return pow(2, m_height.first)-1 == m_size;   // stub
+	size_t height = maxHeight(this->m_root);
+    return pow(2, height)-1 == m_size;   // stub
 }
 /*}}}*/
 
 //!< Returns True if the bst is a complete tree. False otherwise.
 template< typename T >
-bool bst<T>::isComplete() const{
+bool bst<T>::isComplete() {
 /*{{{*/
-	size_t nós = this->m_size - this->height.second;
-	if( nós != pow(2,this->height.first-1)-1 ) return false;
 
-    return true;    // stub
+	if( this.isFull() ) return true;
+
+    std::queue<Node *> to_print;
+	std::queue<key_type> lastLevel;
+	bool alpha = false;
+
+    if(this->m_root == nullptr || this->m_size == 0){
+        return false;
+    }
+
+    to_print.push(this->m_root);
+    while(!to_print.empty())
+    {
+        Node *actual = to_print.front();
+        to_print.pop();
+	
+		if( maxHeight(actual) == 2 )
+		{
+			alpha = true;
+		}
+
+        if(actual->l != nullptr){
+
+			if(alpha){ lastLevel.push(actual->l->key);}
+            to_print.push(actual->l);
+        }
+        if(actual->r != nullptr){
+			if(alpha){ lastLevel.push(actual->r->key);}
+            to_print.push(actual->r);
+        }
+    }    
+
+	size_t nos = this->m_size - lastLevel.size();
+	return pow(2, maxHeight(this->m_root) - 1)-1 == nos;
 }
 /*}}}*/
 
 //!< Returns a string cointaning the bst travelling sequence by level.
 template< typename T >
-std::string bst<T>::toString() const{
+std::string bst<T>::toString(){
 /*{{{*/
     std::string buf;
     std::queue<Node *> to_print;
@@ -246,7 +263,6 @@ bool bst<T>::insert( Node *& root, key_type key ){
         this->m_root = new Node(key);
         this->auxiliar_node = this->m_root;
         this->m_size++;
-		this->m_height = std::make_pair (1,1);
         return true;
     } else {
         if( root == nullptr ){
@@ -254,17 +270,7 @@ bool bst<T>::insert( Node *& root, key_type key ){
             this->m_size++;			// increment the quantity of nodes
 
             add_son(auxiliar_node, root); // link father & son
-
-			int x = checksHeight(root);
-			if( x > this->m_height.first )
-			{
-				this->m_height.first++;
-				this->m_height.second++;
-			}
-			else if( x == this->m_height.first)
-			{
-				this->m_height.second++;
-			}
+	
             if(log)
             {
                 std::cout << "STATUS: ";

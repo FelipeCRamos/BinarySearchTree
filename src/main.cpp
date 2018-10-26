@@ -107,7 +107,7 @@ int main( int argc, char **argv )
 
     std::cout << tree.toString() << std::endl;
 
-    for( int i = 1; i <= tree.size(); i++ ){
+    for( unsigned int i = 1; i <= tree.size(); i++ ){
         std::cout << "Nth(" << i << "): " << tree.nthElement(i) << std::endl;
     }
 
