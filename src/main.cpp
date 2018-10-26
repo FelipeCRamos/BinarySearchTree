@@ -70,20 +70,32 @@ int main( int argc, char **argv )
         std::cout << "command: [" << i.first << "], arg: [" << i.second << "]" << std::endl;
         switch(hashit(i.first)){
             case nth:
-                // not working yet
-                // tree.nthElement( i.second );    // example
+				std::cout << "nthElement not implemented\n";
+//				std::cout << "NthElement: " << tree.nthElement( i.second );
                 break;
             case pos:
-				std::cout << "Position: " << tree.position( i.second ) << "\n";
+				std::cout << "Position: Not implemented\n";
+//				std::cout << "Position: " << tree.position( i.second ) << "\n";
                 break;
             case median:
-                std::cout << "Median element: " << tree.median() << std::endl;
+				std::cout << "Median: Not implemented\n";
+//                std::cout << "Median element: " << tree.median() << std::endl;
                 break;
             case isfull:
-                // function to be called
+                if( tree.isFull() )
+				{
+					std::cout << "Tree is Full?: YES\n"; 
+				} else {
+					std::cout << "Tree is Full?: NO\n";
+				}
                 break;
             case iscomp:
-                // function to be called
+				if( tree.isComplete() )
+				{
+					std::cout << "Tree is Complete?: YES\n";
+				} else {
+					std::cout << "Tree is Complete?: NO\n";
+				}
                 break;
             case print:
                 std::cout << "Current tree by level: " 
@@ -106,7 +118,7 @@ int main( int argc, char **argv )
 	std::cout << "\n\033[1;32mOperations finished successfully!\033[0m\n";
 
     std::cout << tree.toString() << std::endl;
-
+/*
     for( unsigned int i = 1; i <= tree.size(); i++ ){
         std::cout << "Nth(" << i << "): " << tree.nthElement(i) << std::endl;
     }
@@ -135,8 +147,6 @@ int main( int argc, char **argv )
 		avure.add(14);
 		assert( 1 == avure.isFull() );
     }
-
-
-
+*/
 	return 0;
 }

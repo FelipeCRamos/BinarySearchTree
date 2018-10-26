@@ -15,6 +15,7 @@ template <typename T>
 class bst
 {
 	private:
+	/* Private members{{{*/
 		struct Node{
 			key_type key;	        // Key of the node
 			
@@ -40,8 +41,9 @@ class bst
 
         // Auxiliar variable
         Node * auxiliar_node;   // Auxiliar node, used in some functions
-
+	/*}}}*/
 	public:
+	/* Public methods{{{*/
 		//!< Void Constructor
         bst( void );
 
@@ -80,8 +82,12 @@ class bst
 
         //!< Returns the number of elements that the tree has
         size_t size();
-
+	/*}}}*/
     private:
+	/* Private methods(){{{*/
+		//!< Returns height of given (sub)tree.
+		size_t maxHeight( Node * root );
+
         //!< A function to make the link between father & son nodes
         void add_son( Node *& father, Node *& son );
         
@@ -102,6 +108,7 @@ class bst
 
         //!< An internal remove function, to remove a given node
 		void exclude( Node*&, key_type );
+	/*}}}*/
 };
 
 // Source code

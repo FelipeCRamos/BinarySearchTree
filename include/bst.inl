@@ -72,7 +72,7 @@ key_type bst<T>::median() {
 template< typename T >
 bool bst<T>::isFull() {
 /*{{{*/
-	size_t height = maxHeight(this->m_root);
+	size_t height = this->maxHeight(this->m_root);
     return pow(2, height)-1 == m_size;   // stub
 }
 /*}}}*/
@@ -82,7 +82,7 @@ template< typename T >
 bool bst<T>::isComplete() {
 /*{{{*/
 
-	if( this.isFull() ) return true;
+	if( this->isFull() ) return true;
 
     std::queue<Node *> to_print;
 	std::queue<key_type> lastLevel;
@@ -98,7 +98,7 @@ bool bst<T>::isComplete() {
         Node *actual = to_print.front();
         to_print.pop();
 	
-		if( maxHeight(actual) == 2 )
+		if( this->maxHeight(actual) == 2 )
 		{
 			alpha = true;
 		}
@@ -115,7 +115,7 @@ bool bst<T>::isComplete() {
     }    
 
 	size_t nos = this->m_size - lastLevel.size();
-	return pow(2, maxHeight(this->m_root) - 1)-1 == nos;
+	return pow(2, this->maxHeight(this->m_root) - 1)-1 == nos;
 }
 /*}}}*/
 
@@ -157,6 +157,23 @@ size_t bst<T>::size(){
 /*}}}*/
 
 //============================================================ PRIVATE FUNCTIONS 
+
+//!< Returns height of given (sub)tree.
+template <typename T>
+size_t bst<T>::maxHeight( Node * root ){
+/*{{{*/
+	if( root == nullptr || this->m_size == 0 ) return 0;
+	else
+	{
+		size_t lHeight = this->maxHeight(root->l);
+		size_t rHeight = this->maxHeight(root->r);
+
+		// Returns the larger one.
+		if( lHeight > rHeight ) return lHeight+1;
+		else return rHeight+1;
+	}
+}
+/*}}}*/
 
 template <typename T>
 void bst<T>::add_son( Node *& father, Node *& son ){
