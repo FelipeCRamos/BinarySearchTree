@@ -69,7 +69,7 @@ We shall briefly explain all methods complexities, besides the standard binary s
 
 + `median()`: O(n), We call the `nthElement()` function on `tree.size+1/2`(if `tree.size` it's an odd number) or the smaller element between the `tree.size/2` and `tree.size+1/2`(if `tree.size` is an even number).
 
-+ `isFull()`:		TODO---DANIEL---TODO
++ `isFull()`: O(n), because it depends on the maxHeight function, wich diggs down onto both left and right nodes.
 
 + `isComplete()`:	TODO---DANIEL---TODO
 
