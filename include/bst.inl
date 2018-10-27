@@ -51,7 +51,24 @@ key_type bst<T>::nthElement( size_t n ){
 template< typename T >
 int bst<T>::position( key_type key ) {
 /*{{{*/
-	//TODO
+    size_t pos = 1;
+    Node * curr = this->m_root;
+    std::stack<Node *> pool;
+    while( !pool.empty() || curr ){
+        if( curr ){
+            pool.push(curr);
+            curr = curr->l;
+        } else {
+            curr = pool.top();
+            pool.pop();
+            if( curr->key == key ){
+                return pos;
+            } else {
+                pos++;
+                curr = curr->r;
+            }
+        }
+    }
 }
 /*}}}*/
 
