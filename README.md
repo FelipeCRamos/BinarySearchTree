@@ -40,20 +40,11 @@ In this version, we will support the following commands:
 
 
 
-## TODO
-
-- [x] Node Struct
-- [ ] Bst methods
-- [x] Main.cpp organization
-- [x] Makefile/CmakeLists
-- [x] InputFile reading
-- [ ] `Maneira de atualizar a altura da árvore e dos nós nas remoções`
-
 ## Compilation
 
 1. In order to compile, some dependencies are required:
 + `make`
-+ `GCC` 
++ `gcc` || `clang` 
 2. Clone the repository onto your computer and run on terminal:
 ```bash
 make
@@ -72,17 +63,17 @@ make
 
 We shall briefly explain all methods complexities, besides the standard binary search tree functions. Observe that this isn't a deep justification over complexity.
 
-+ `nthElement()`:	TODO---F---TODO
++ `nthElement()`: O(n), we did an in-order approach, but instead of "printing" results, we increment the accumulator, when accumulator == nth, we return it.
 
-+ `position()`:		TODO---E---TODO
++ `position()`: O(n), same as `nthElement()`, but instead of comparing with the accumulator, we compare with the key, if true: returns the accumulator.
 
-+ `median()`:		TODO---L---TODO
++ `median()`: O(n), We call the `nthElement()` function on `tree.size+1/2`(if `tree.size` it's an odd number) or the smaller element between the `tree.size/2` and `tree.size+1/2`(if `tree.size` is an even number).
 
-+ `isFull()`:		TODO---I---TODO
++ `isFull()`:		TODO---DANIEL---TODO
 
-+ `isComplete()`:	TODO---P---TODO
++ `isComplete()`:	TODO---DANIEL---TODO
 
-+ `toString()`:		TODO---E---TODO
++ `toString()`: O(n), it's impossible print all elements without going through all elements.
 
 ## Authorship
 
