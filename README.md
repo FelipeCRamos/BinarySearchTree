@@ -39,7 +39,6 @@ In this version, we will support the following commands:
 + `INSIRA N` - Will insert key `N` into the binary search tree.
 
 
-
 ## Compilation
 
 1. In order to compile, some dependencies are required:
@@ -59,21 +58,24 @@ make
 
 ### Approaches Followed
 
+To implement a usable Binary Search Tree, we adopted the ideia of a object Tree, which is a composition of numerous Nodes (another object implemented) and containing information of it's root and it's number of nodes. Now about the Nodes. Our object Node has information over it's key (same as content), the number os Nodes on his left and right, and pointer connecting it to it's left-below, right-below, and above Nodes.
+With such information, we were able to completly implement the standard and new methods. For example, thanks to knowing the amount of Nodes to the left and right of a given Node, we were able to implement`nthElement`, `position` and `median` methods, with complexity `O(h)`, where **h** is Tree's height.
+
 ### Asymptotic Complexity Analysis
 
 We shall briefly explain all methods complexities, besides the standard binary search tree functions. Observe that this isn't a deep justification over complexity.
 
-+ `nthElement()`: O(n), we did an in-order approach, but instead of "printing" results, we increment the accumulator, when accumulator == nth, we return it.
++ `nthElement()`: `O(n)`. We did an in-order approach, but instead of "printing" results, we increment the accumulator, when accumulator == nth, we return it.
 
-+ `position()`: O(n), same as `nthElement()`, but instead of comparing with the accumulator, we compare with the key, if true: returns the accumulator.
++ `position()`: `O(n)`. Same as `nthElement()`, but instead of comparing with the accumulator, we compare with the key, if true: returns the accumulator.
 
-+ `median()`: O(n), We call the `nthElement()` function on `tree.size+1/2`(if `tree.size` it's an odd number) or the smaller element between the `tree.size/2` and `tree.size+1/2`(if `tree.size` is an even number).
++ `median()`: `O(n)`. We call the `nthElement()` function on `tree.size+1/2`(if `tree.size` it's an odd number) or the smaller element between the `tree.size/2` and `tree.size+1/2`(if `tree.size` is an even number). If it derivates mostly from a `O(n)` function, then it is also a `O(n)`.
 
-+ `isFull()`: O(n), because it depends on the maxHeight function, wich diggs down onto both left and right nodes.
++ `isFull()`: `O(n)`. It depends on `maxHeight()` function, wich digs down onto both left and right Nodes.
 
-+ `isComplete()`:	TODO---DANIEL---TODO
++ `isComplete()`: `O(n)`. Same ideia of `toString()` was used, so that we could determine the number of Nodes on it's last level. After that, it's complexity is determinated by `maxHeight()` function. Even though multiple `O(n)` methods are called, this procedure still classifies as `O(n)`.
 
-+ `toString()`: O(n), it's impossible print all elements without going through all elements.
++ `toString()`: `O(n)`. It's impossible print all elements without going through all elements.
 
 ## Authorship
 
