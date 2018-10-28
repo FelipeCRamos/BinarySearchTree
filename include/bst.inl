@@ -22,56 +22,7 @@ bst<T>::~bst( void ){
 }
 /*}}}*/
 
-//!< Returns nent element, going from 1 with in-order path of bst.
-template< typename T >
-key_type bst<T>::nthElement( size_t n ){
-/*{{{*/
-    size_t acc = 1;
-    Node * curr = this->m_root;
-    std::stack<Node *> pool;
-    while( !pool.empty() || curr ){
-        if( curr ){
-            pool.push(curr);
-            curr = curr->l;
-        } else {
-            curr = pool.top();
-            pool.pop();
-            if( acc == n ){
-                return curr->key;
-            } else {
-                acc++;
-                curr = curr->r;
-            }
-        }
-    }
-}
-/*}}}*/
-
-//!< Returns position occupied by value, with in-order path.
-template< typename T >
-int bst<T>::position( key_type key ) {
-/*{{{*/
-    size_t pos = 1;
-    Node * curr = this->m_root;
-    std::stack<Node *> pool;
-    while( !pool.empty() || curr ){
-        if( curr ){
-            pool.push(curr);
-            curr = curr->l;
-        } else {
-            curr = pool.top();
-            pool.pop();
-            if( curr->key == key ){
-                return pos;
-            } else {
-                pos++;
-                curr = curr->r;
-            }
-        }
-    }
-}
-/*}}}*/
-
+//!< Returns the middle element based at a in-order enumeration.
 template< typename T >
 key_type bst<T>::median() {
 /*{{{*/
@@ -175,7 +126,7 @@ size_t bst<T>::size(){
 
 //============================================================ PRIVATE FUNCTIONS 
 
-//!< Returns height of given (sub)tree.
+/*Auxiliary ones{{{*/
 template <typename T>
 size_t bst<T>::maxHeight( Node * root ){
 /*{{{*/
@@ -270,7 +221,26 @@ void bst<T>::update( Node*& actual, code_t type ){
 }
 /*}}}*/
 
-//!< Searches for a specific value inside tree.
+template <typename T>
+typename bst<T>::Node * bst<T>::find_pred( Node *& actual ){
+/*{{{*/
+    Node *it = actual;
+
+    if( actual->l != nullptr ){
+        it = actual->l;
+    } else {
+        return actual;
+    }
+
+    while( it->r != nullptr ){
+        it = it->r;
+    }
+
+    return it;
+}
+/*}}}*/
+/*}}}*/
+/*Internal versions{{{*/
 template< typename T >
 typename bst<T>::Node* bst<T>::i_find( Node *& root, key_type key ){
 /*{{{*/
@@ -334,25 +304,6 @@ bool bst<T>::insert( Node *& root, key_type key ){
     }
 
     return false;
-}
-/*}}}*/
-
-template <typename T>
-typename bst<T>::Node * bst<T>::find_pred( Node *& actual ){
-/*{{{*/
-    Node *it = actual;
-
-    if( actual->l != nullptr ){
-        it = actual->l;
-    } else {
-        return actual;
-    }
-
-    while( it->r != nullptr ){
-        it = it->r;
-    }
-
-    return it;
 }
 /*}}}*/
 
@@ -465,4 +416,37 @@ void bst<T>::exclude( Node*& root, key_type key ){
         this->m_size--;
     }
 }
+/*}}}*/
+
+template< typename T >
+key_type bst<T>::i_nth( size_t n, Node* root )
+/*{{{*/
+{
+	/* Based on in-order path, we are able to use
+	   this idea of left and right Nodes amount.
+	 */
+	if( root == nullptr or this->m_size == 0) return -1;
+	size_t nth = root->sub_l + 1;
+
+	if( nth > n) return i_nth(n, root->l);
+	else if( nth < n ) return i_nth(n-nth, root->r);
+
+	return root->key;
+}
+/*}}}*/
+
+//!< Returns position occupied by value, with in-order path.
+template< typename T >
+int bst<T>::i_pos( key_type key, Node* root, size_t pos )
+/*{{{*/
+{
+	if( root == nullptr ) return -1;
+	int current = pos + root->sub_l + 1;
+
+	if( key < root->key) return i_pos(key, root->l, pos);
+	else if( key > root->key ) return i_pos(key, root->r, current);
+
+	return current;
+}
+/*}}}*/
 /*}}}*/

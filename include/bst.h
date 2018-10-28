@@ -50,9 +50,6 @@ class bst
 		//!< Destructor
         ~bst( void );
 
-		//!< Copy Constructor
-        bst( bst<T> &rhs );
-
 		//!< Searches for a specific value inside tree./
 		Node find( T key ){ return i_find(this->m_root, key); };
 
@@ -63,10 +60,10 @@ class bst
 		void remove( key_type key ){ return exclude(this->m_root, key); };
 
 		//!< Returns nth element, going from 1 with in-order path of bst.
-		key_type nthElement( size_t n );
+		key_type nthElement( size_t n ){return i_nth( n, this->m_root);};
 
 		//!< Returns position occupied by key, with in-order path.
-		int position( key_type key );
+		int position( key_type key ){return i_pos(key, this->m_root, 0);};
 
         //!< Returns the median of the Tree
 		key_type median();
@@ -108,6 +105,13 @@ class bst
 
         //!< An internal remove function, to remove a given node
 		void exclude( Node*&, key_type );
+
+        //!< An internal nthElement function, to return node's key given it's position.
+		key_type i_nth( size_t, Node* );
+
+        //!< An internal position function, to return position of a given key of a node.
+		int i_pos( key_type, Node*, size_t );
+
 	/*}}}*/
 };
 
