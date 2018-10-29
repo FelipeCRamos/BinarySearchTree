@@ -65,7 +65,7 @@ To assist onto implementation, we cretead several auxiliary private methods, so 
 
 ### Asymptotic Complexity Analysis
 
-We shall briefly explain all methods complexities, besides the standard binary search tree functions. Observe that this isn't a deep justification over complexity. Also consider **h** as **Tree's Height**. In a balanced binary tree, **h** would actually be same as `log(n)`.
+We shall briefly explain all methods complexities, besides the standard binary search tree functions. Observe that this isn't a deep justification over complexity. Also consider **h** as **Tree's Height**. In a balanced binary tree, **`h == log(n)`**. 
 
 + `nthElement()`: `O(h)`. We have inside each node two variables holding number of nodes in left and right sub-trees. Then, to discover the nth element we just compare if a given `node.l_subtrees` is bigger/smaller than and then we dig down into the correct direction, getting a height based asymptotic complexity (`O(h)`).
 
