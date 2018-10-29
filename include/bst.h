@@ -60,7 +60,7 @@ class bst
 		void remove( key_type key ){ return exclude(this->m_root, key); };
 
 		//!< Returns nth element, going from 1 with in-order path of bst.
-		key_type nthElement( size_t n ){return i_nth( n, this->m_root);};
+		key_type nthElement( size_t n ){ return i_nth( n, this->m_root); };
 
 		//!< Returns position occupied by key, with in-order path.
 		int position( key_type key ){return i_pos(key, this->m_root, 0);};
