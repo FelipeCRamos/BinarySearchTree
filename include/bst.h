@@ -83,7 +83,10 @@ class bst
     private:
 	/* Private methods(){{{*/
 		//!< Returns height of given (sub)tree.
-		size_t maxHeight( Node * root );
+		size_t maxHeight( Node* root );
+
+		//!< Returns distance of given node to tree root.
+		size_t distRoot( Node* root );
 
         //!< A function to make the link between father & son nodes
         void add_son( Node *& father, Node *& son );

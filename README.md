@@ -73,7 +73,7 @@ We shall briefly explain all methods complexities, besides the standard binary s
 
 + `isFull()`: `O(n)`. It depends on `maxHeight()` function, wich digs down onto both left and right Nodes.
 
-+ `isComplete()`: `O(n)`. Same ideia of `toString()` was used, so that we could determine the number of Nodes on it's last level. After that, it's complexity is determinated by `maxHeight()` function. Even though multiple `O(n)` methods are called, this procedure still classifies as `O(n)`.
++ `isComplete()`: `O(h*n)`, where **h** is Tree's height. Same ideia of `toString()` was used, so that we could determine the number of Nodes on it's last level, but while checking each Node, a function to determine Node's distance to Tree root is executed, `distRoot()`,which has `O(h)` complexity. After that, it's complexity is determinated by `maxHeight()` function. Even though multiple `O(n)` methods are called, this procedure still classifies as `O(n)`.
 
 + `toString()`: `O(n)`. It's impossible print all elements without going through all elements.
 

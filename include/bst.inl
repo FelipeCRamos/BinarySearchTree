@@ -50,7 +50,8 @@ template< typename T >
 bool bst<T>::isComplete() {
 /*{{{*/
 
-	if( this->isFull() ) return true;
+	size_t treeHeight = this->maxHeight(this->m_root);
+	if( pow(2, treeHeight)-1 == m_size ) return true;
 
     std::queue<Node *> to_print;
 	std::queue<key_type> lastLevel;
@@ -61,15 +62,18 @@ bool bst<T>::isComplete() {
     }
 
     to_print.push(this->m_root);
+	std::cout << "\nPenultimos: ";
     while(!to_print.empty())
     {
         Node *actual = to_print.front();
         to_print.pop();
 	
-		if( this->maxHeight(actual) == 2 )
+		if( treeHeight - this->distRoot(actual) == 2 )
 		{
 			alpha = true;
 		}
+
+		else{ alpha = false; }
 
         if(actual->l != nullptr){
 
@@ -80,9 +84,14 @@ bool bst<T>::isComplete() {
 			if(alpha){ lastLevel.push(actual->r->key);}
             to_print.push(actual->r);
         }
-    }    
+
+		if(alpha) std::cout << actual->key << " ";
+    }
+	std::cout << "\n";
 
 	size_t nos = this->m_size - lastLevel.size();
+
+	std::cout << "\n LastLevel = " << lastLevel.size() << ", Nos = " << nos << "\n";
 	return pow(2, this->maxHeight(this->m_root) - 1)-1 == nos;
 }
 /*}}}*/
@@ -128,7 +137,7 @@ size_t bst<T>::size(){
 
 /*Auxiliary ones{{{*/
 template <typename T>
-size_t bst<T>::maxHeight( Node * root ){
+size_t bst<T>::maxHeight( Node* root ){
 /*{{{*/
 	if( root == nullptr || this->m_size == 0 ) return 0;
 	else
@@ -140,6 +149,22 @@ size_t bst<T>::maxHeight( Node * root ){
 		if( lHeight > rHeight ) return lHeight+1;
 		else return rHeight+1;
 	}
+}
+/*}}}*/
+
+template <typename T>
+size_t bst<T>::distRoot( Node* root ){
+/*{{{*/
+	if( root == nullptr || this->m_size == 0 ) return -1;
+	size_t dist = 0;
+
+	while( root != this->m_root )
+	{
+		dist++;
+		root = root->f;
+	}
+	
+	return dist;
 }
 /*}}}*/
 
