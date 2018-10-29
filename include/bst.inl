@@ -49,7 +49,6 @@ bool bst<T>::isFull() {
 template< typename T >
 bool bst<T>::isComplete() {
 /*{{{*/
-
 	size_t treeHeight = this->maxHeight(this->m_root);
 	if( pow(2, treeHeight)-1 == m_size ) return true;
 
@@ -62,7 +61,6 @@ bool bst<T>::isComplete() {
     }
 
     to_print.push(this->m_root);
-	std::cout << "\nPenultimos: ";
     while(!to_print.empty())
     {
         Node *actual = to_print.front();
@@ -84,14 +82,9 @@ bool bst<T>::isComplete() {
 			if(alpha){ lastLevel.push(actual->r->key);}
             to_print.push(actual->r);
         }
-
-		if(alpha) std::cout << actual->key << " ";
     }
-	std::cout << "\n";
 
 	size_t nos = this->m_size - lastLevel.size();
-
-	std::cout << "\n LastLevel = " << lastLevel.size() << ", Nos = " << nos << "\n";
 	return pow(2, this->maxHeight(this->m_root) - 1)-1 == nos;
 }
 /*}}}*/
@@ -223,7 +216,7 @@ void bst<T>::update( Node*& actual, code_t type ){
                 it->f->sub_r -= 1;
 
             } else{
-				std::cerr << "ERROR: [D01]\n";
+				if(log)std::cerr << "ERROR: [D01]\n";
 			}
 		}
 		else if(it->f->l == it){
@@ -234,11 +227,11 @@ void bst<T>::update( Node*& actual, code_t type ){
                 it->f->sub_l -= 1;
 
             } else {
-				std::cerr << "ERROR: [D02]\n";
+				if(log)std::cerr << "ERROR: [D02]\n";
 			}
 
 		} else {
-            std::cerr << "ERROR: [D03]\n";
+            if(log)std::cerr << "ERROR: [D03]\n";
 		}
 
 		it = it->f;
