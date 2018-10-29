@@ -51,7 +51,7 @@ make
 3. Run the program with:
 ```bash
 ./bintree [data-file] [command-file]
-# ex: ./bintree data/binary-tree.txt commands-set.txt
+# ex: ./bintree test/1.tree test/1.cmd
 ```
 
 ## Report
@@ -65,11 +65,11 @@ With such information, we were able to completly implement the standard and new 
 
 We shall briefly explain all methods complexities, besides the standard binary search tree functions. Observe that this isn't a deep justification over complexity.
 
-+ `nthElement()`: `O(n)`. We did an in-order approach, but instead of "printing" results, we increment the accumulator, when accumulator == nth, we return it.
++ `nthElement()`: `O(h)`. We have inside each node two variables holding number of nodes in left and right sub-trees. Then, to discover the nth element we just compare if a given `node.l_subtrees` is bigger/smaller than and then we dig down into the correct direction, getting a height based asymptotic complexity (`O(h)`).
 
-+ `position()`: `O(n)`. Same as `nthElement()`, but instead of comparing with the accumulator, we compare with the key, if true: returns the accumulator.
++ `position()`: `O(h)`. Same principle as the nthElement (since it has an internal call inside for the comparissons).
 
-+ `median()`: `O(n)`. We call the `nthElement()` function on `tree.size+1/2`(if `tree.size` it's an odd number) or the smaller element between the `tree.size/2` and `tree.size+1/2`(if `tree.size` is an even number). If it derivates mostly from a `O(n)` function, then it is also a `O(n)`.
++ `median()`: `O(h)`. We call the `nthElement()` function on `tree.size+1/2`(if `tree.size` it's an odd number) or the smaller element between the `tree.size/2` and `tree.size+1/2`(if `tree.size` is an even number). If it derivates mostly from a `O(h)` function, then it is also a `O(h)`.
 
 + `isFull()`: `O(n)`. It depends on `maxHeight()` function, wich digs down onto both left and right Nodes.
 
