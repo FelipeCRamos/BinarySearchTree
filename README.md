@@ -61,9 +61,11 @@ make
 To implement a usable Binary Search Tree, we adopted the ideia of a object Tree, which is a composition of numerous Nodes (another object implemented) and containing information of it's root and it's number of nodes. Now about the Nodes. Our object Node has information over it's key (same as content), the number os Nodes on his left and right, and pointer connecting it to it's left-below, right-below, and above Nodes.
 With such information, we were able to completly implement the standard and new methods. For example, thanks to knowing the amount of Nodes to the left and right of a given Node, we were able to implement`nthElement`, `position` and `median` methods, with complexity `O(h)`, where **h** is Tree's height.
 
+To assist onto implementation, we cretead several auxiliary private methods, so we could, for example, be able to determine Tree's height, or update informations on Nodes by every insertion or remotion, or even calculate distance over one Node to Tree's root Node. Inside most methods, this auxiliary ones were called to facilitate the general implementation and complexity.
+
 ### Asymptotic Complexity Analysis
 
-We shall briefly explain all methods complexities, besides the standard binary search tree functions. Observe that this isn't a deep justification over complexity.
+We shall briefly explain all methods complexities, besides the standard binary search tree functions. Observe that this isn't a deep justification over complexity. Also consider **h** as **Tree's Height**. In a balanced binary tree, **h** would actually be same as `log(n)`.
 
 + `nthElement()`: `O(h)`. We have inside each node two variables holding number of nodes in left and right sub-trees. Then, to discover the nth element we just compare if a given `node.l_subtrees` is bigger/smaller than and then we dig down into the correct direction, getting a height based asymptotic complexity (`O(h)`).
 
@@ -73,7 +75,7 @@ We shall briefly explain all methods complexities, besides the standard binary s
 
 + `isFull()`: `O(n)`. It depends on `maxHeight()` function, wich digs down onto both left and right Nodes.
 
-+ `isComplete()`: `O(h*n)`, where **h** is Tree's height. Same ideia of `toString()` was used, so that we could determine the number of Nodes on it's last level, but while checking each Node, a function to determine Node's distance to Tree root is executed, `distRoot()`,which has `O(h)` complexity. After that, it's complexity is determinated by `maxHeight()` function. Even though multiple `O(n)` methods are called, this procedure still classifies as `O(n)`.
++ `isComplete()`: `O(h*n)`. Same ideia of `toString()` was used, so that we could determine the number of Nodes on it's last level, but while checking each Node, a function to determine Node's distance to Tree root is executed, `distRoot()`,which has `O(h)` complexity. After that, it's complexity is determinated by `maxHeight()` function. Even though multiple `O(n)` methods are called, this procedure still classifies as `O(n)`.
 
 + `toString()`: `O(n)`. It's impossible print all elements without going through all elements.
 
