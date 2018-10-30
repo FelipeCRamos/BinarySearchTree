@@ -4,30 +4,33 @@
 
 #define debug false
 
-enum func_code{
-    nth,
-    pos,
-    median,
-    isfull,
-    iscomp,
-    print,
-    remov,
-    insert,
-    none
+//!< Some function codes to feed the switch() statement
+namespace function{
+    enum code{
+        nth,
+        pos,
+        median,
+        isfull,
+        iscomp,
+        print,
+        remov,
+        insert,
+        none
+    };
 };
 
 //!< Convert the string function to a func_code
-func_code hashit( std::string const &str_c ){
-    if( str_c == "ENESIMO" )    return nth;
-    if( str_c == "POSICAO" )    return pos;
-    if( str_c == "MEDIANA" )    return median;
-    if( str_c == "CHEIA" )      return isfull;
-    if( str_c == "COMPLETA" )   return iscomp;
-    if( str_c == "IMPRIMA" )    return print;
-    if( str_c == "REMOVA" )     return remov;
-    if( str_c == "INSIRA" )     return insert;
+function::code hashit( std::string const &str_c ){
+    if( str_c == "ENESIMO" )    return function::nth;
+    if( str_c == "POSICAO" )    return function::pos;
+    if( str_c == "MEDIANA" )    return function::median;
+    if( str_c == "CHEIA" )      return function::isfull;
+    if( str_c == "COMPLETA" )   return function::iscomp;
+    if( str_c == "IMPRIMA" )    return function::print;
+    if( str_c == "REMOVA" )     return function::remov;
+    if( str_c == "INSIRA" )     return function::insert;
 
-    return none;    // none matched, probably a invalid command
+    return function::none;    // none matched, probably a invalid command
 }
 
 int main( int argc, char **argv )
@@ -80,16 +83,16 @@ int main( int argc, char **argv )
             << "], arg: [" << i.second << "]" << std::endl;
 
         switch(hashit(i.first)){
-            case nth:
+            case function::nth:
                 std::cout << "NthElement: " << tree.nthElement( i.second ) << "\n";
                 break;
-            case pos:
+            case function::pos:
                 std::cout << "Position: " << tree.position( i.second ) << "\n";
                 break;
-            case median:
+            case function::median:
                 std::cout << "Median element: " << tree.median() << std::endl;
                 break;
-            case isfull:
+            case function::isfull:
                 if( tree.isFull() )
 				{
 					std::cout << "Tree is Full?: True\n"; 
@@ -97,7 +100,7 @@ int main( int argc, char **argv )
 					std::cout << "Tree is Full?: False\n";
 				}
                 break;
-            case iscomp:
+            case function::iscomp:
 				if( tree.isComplete() )
 				{
 					std::cout << "Tree is Complete?: True\n";
@@ -105,19 +108,19 @@ int main( int argc, char **argv )
 					std::cout << "Tree is Complete?: False\n";
 				}
                 break;
-            case print:
+            case function::print:
                 std::cout << "Current tree by level: " 
                     << tree.toString() << std::endl;
                 break;
-            case remov:
+            case function::remov:
                 std::cout << "Removing " << i.second << std::endl;
                 tree.remove( i.second );
                 break;
-            case insert:
+            case function::insert:
                 std::cout << "Inserting " << i.second << std::endl;
                 tree.add( i.second );
                 break;
-            case none:
+            case function::none:
                 std::cout << "Sorry, command " << i.first
 						  << " isn't known!\n Try a valid command.\n";
                 return 1;
